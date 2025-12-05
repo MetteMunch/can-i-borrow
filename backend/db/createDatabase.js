@@ -1,0 +1,53 @@
+import 'dotenv/config';
+import  db  from './db.js';
+import bcrypt from 'bcryptjs';
+
+// db.exec - kører DCL og DDL quiries mod databasen (DDL er oprettelse af tabeller mm, og DCL er oprettelse og auth af brugere
+// db.run - er med parametre og til INSERT, UPDATE, DELETE
+// db.all - er til SELECT
+
+/*
+Conventions for SQL
+use lowercase
+use snake case
+use plural for tables
+*/
+
+const deleteTableMode = process.argv.includes('delete'); //når vi kører i dette mode, så droppes tabeller
+const updateTableMode = process.argv.includes('update'); //når vi kører i dette mode, så oprettes tabeller
+const insertDataMode = process.argv.includes('insert'); //når vi kører i dette mode, så indsætter vi init data
+
+if(deleteTableMode) {
+    await db.exec(`
+        DROP TABLE IF EXISTS users;
+    `);
+}
+
+if(updateTableMode) {
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS users
+        (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            fullname VARCHAR (200) NOT NULL,
+            username VARCHAR (50) UNIQUE NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            role TEXT CHECK( role IN ("ADMIN", "USER") )
+            );
+    `);
+}
+
+if(insertDataMode) {
+    const adminpassword = await bcrypt.hash(process.env.ADMINPASS, 14);
+    const userpassword = await bcrypt.hash(process.env.USERPASS, 14);
+
+    await db.run(`
+        INSERT INTO users (fullname, username, email, password, role)
+        VALUES ('Admin Bruger', 'adminusername', 'admin@mail.dk', ? , 'ADMIN');
+    `,adminpassword);
+    await db.run(`
+        INSERT INTO users (fullname, username, email, password, role)
+        VALUES ('Alm Bruger', 'almusername', 'alm@mail.dk', ?, 'USER');
+    `,userpassword);
+}
+
