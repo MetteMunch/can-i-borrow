@@ -5,8 +5,15 @@ const router = Router();
 
 
 router.get("/", async (req, res) => {
-    const items = await db.all("SELECT * FROM items;");
-    res.send(items);
+    const allItems = await db.all("SELECT * FROM items;");
+    res.send(allItems);
+});
+
+router.get("/:itemId", async (req, res) => {
+    const specificItem = await db.get("SELECT * FROM items WHERE id = ?", req.params.itemId);
+    res.status(200).send({
+        data: specificItem
+    });
 });
 
 router.post("/", async (req, res) => {
@@ -18,7 +25,9 @@ router.post("/", async (req, res) => {
             VALUES (?, ?, ?, ?)`, item, description, req.session.user.id, image_url);
 
         const createdItem = await db.get(`
-        SELECT * FROM items WHERE id = ? `, newItem.lastID);
+            SELECT *
+            FROM items
+            WHERE id = ? `, newItem.lastID);
 
         res.status(201).send({
             message: "item created",
@@ -26,8 +35,8 @@ router.post("/", async (req, res) => {
         });
 
     } catch (error) {
-        console.error(err);
-        res.status(500).send({ error: "Could not create item" });
+        console.error(error);
+        res.status(500).send({error: "Could not create item"});
     }
 
 });
