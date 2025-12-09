@@ -14,7 +14,6 @@
     import toastr from 'toastr';
     import ForgotPassword from "./pages/auth/ForgotPassword.svelte";
     import ResetDemo from "./pages/auth/ResetPasswordDemo.svelte";
-    import CalendarTest from "./pages/items/CalendarTest.svelte";
     import ItemDetail from "./pages/items/ItemDetail.svelte";
 
 
@@ -92,15 +91,9 @@
             </MainLayout>
         </Route>
 
-        <Route path="/item-details">
+        <Route path="/item-details/:id" let:params>
             <MainLayout>
-                <ItemDetail />
-            </MainLayout>
-        </Route>
-
-        <Route path="/kalender-demo">
-            <MainLayout>
-                <CalendarTest />
+                <ItemDetail {params}/>
             </MainLayout>
         </Route>
 

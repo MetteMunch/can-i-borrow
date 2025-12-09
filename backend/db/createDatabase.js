@@ -93,7 +93,7 @@ if(insertDataMode) {
 
    await db.exec(`
         INSERT INTO reservations (item_id, start_date, end_date, requested_by)
-        VALUES (1,'2025-12-08T08:56:51.000Z','2025-12-09T09:00:00.000Z',1);
+        VALUES (1,'2025-12-27T08:56:51.000Z', '2025-12-28T09:00:00.000Z',1);
    `);
 }
 
