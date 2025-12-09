@@ -15,6 +15,7 @@
     import ForgotPassword from "./pages/auth/ForgotPassword.svelte";
     import ResetDemo from "./pages/auth/ResetPasswordDemo.svelte";
     import CalendarTest from "./pages/items/CalendarTest.svelte";
+    import ItemDetail from "./pages/items/ItemDetail.svelte";
 
 
     toastr.options = {
@@ -88,6 +89,12 @@
         <Route path="/reset-demo">
             <MainLayout>
                 <ResetDemo />
+            </MainLayout>
+        </Route>
+
+        <Route path="/item-details">
+            <MainLayout>
+                <ItemDetail />
             </MainLayout>
         </Route>
 
