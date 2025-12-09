@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import db from "../db/db.js";
+import { isLoggedIn } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.get("/item/:itemId", async (req, res) => {
 
 
 
-router.post("/request", async (req, res) => {
+router.post("/request", isLoggedIn, async (req, res) => {
     const {item_id, start_date, end_date} = req.body;
 
     try {
