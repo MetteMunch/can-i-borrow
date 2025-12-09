@@ -41,7 +41,7 @@ router.put("/:reservationId/approve", async (req,res) => {
     UPDATE reservations SET status = 'APPROVED' WHERE id = ?`, req.params.reservationId);
 
     const getAppReservation = await db.get(`
-    SELECT * FROM reservations WHERE id = ?`, reg.params.reservationId);
+    SELECT * FROM reservations WHERE id = ?`, req.params.reservationId);
 
     res.status(200).send({
         message: "request approved",
