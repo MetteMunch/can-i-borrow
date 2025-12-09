@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 // db.exec - kører DCL og DDL quiries mod databasen (DDL er oprettelse af tabeller mm, og DCL er oprettelse og auth af brugere
 // db.run - er med parametre og til INSERT, UPDATE, DELETE
 // db.all - er til SELECT
+//db.get - er til SELECT men returnerer kun et resultat / række
 
 /*
 Conventions for SQL
@@ -62,7 +63,7 @@ if(updateTableMode) {
             item_id INTEGER NOT NULL,
             start_date TEXT NOT NULL,
             end_date TEXT NOT NULL,
-            status TEXT CHECK (status IN ('BLOCKED','REQUESTED','APPROVED')) NOT NULL,
+            status TEXT DEFAULT 'REQUESTED' CHECK (status IN ('BLOCKED','REQUESTED','APPROVED')) NOT NULL,
             requested_by INTEGER,
             FOREIGN KEY (item_id) REFERENCES items(id),
             FOREIGN KEY (requested_by) REFERENCES users(id)
@@ -91,8 +92,8 @@ if(insertDataMode) {
    `);
 
    await db.exec(`
-        INSERT INTO reservations (item_id, start_date, end_date, status, requested_by)
-        VALUES (1,'2025-12-08T08:56:51.000Z','2025-12-09T09:00:00.000Z','REQUESTED',1);
+        INSERT INTO reservations (item_id, start_date, end_date, requested_by)
+        VALUES (1,'2025-12-08T08:56:51.000Z','2025-12-09T09:00:00.000Z',1);
    `);
 }
 

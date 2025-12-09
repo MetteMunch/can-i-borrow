@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import db from "../db/db.js";
 import {sendResetEmail} from "../utils/email.js";

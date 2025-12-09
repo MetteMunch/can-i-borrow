@@ -29,6 +29,12 @@ app.use("/session", sessionRouter);
 import authRouter from "./routes/authRouter.js";
 app.use("/auth", authRouter);
 
+import itemsRouter from "./routes/itemsRouter.js";
+app.use("/items", itemsRouter);
+
+import reservationsRouter from "./routes/reservationsRouter.js"
+app.use("/reservations", reservationsRouter);
+
 app.get("/test", (req, res) => {
     res.send({data: "Der er hul igennem til test"});
 });
