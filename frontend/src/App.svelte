@@ -14,6 +14,7 @@
     import toastr from 'toastr';
     import ForgotPassword from "./pages/auth/ForgotPassword.svelte";
     import ResetDemo from "./pages/auth/ResetPasswordDemo.svelte";
+    import CalendarTest from "./pages/items/CalendarTest.svelte";
 
 
     toastr.options = {
@@ -90,8 +91,12 @@
             </MainLayout>
         </Route>
 
+        <Route path="/kalender-demo">
+            <MainLayout>
+                <CalendarTest />
+            </MainLayout>
+        </Route>
 
     </div>
-
 
 </Router>
