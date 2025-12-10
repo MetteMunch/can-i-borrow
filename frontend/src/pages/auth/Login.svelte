@@ -35,6 +35,8 @@
 
         toastr.success("Du er nu logget ind!");
 
+        console.log("her er jeg i Login.svelte og vil se sessionData", sessionData)
+
         // redirect
         if (sessionData.user.role === "ADMIN") {
             navigate("/AdminDashboard");

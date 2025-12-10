@@ -85,15 +85,32 @@ if(insertDataMode) {
         VALUES ('Alm Bruger', 'Tøl66', 'alm@mail.dk', ?, 'USER', 'Tølløsevej 66', 12345678);
    `,userpassword);
 
-   await db.exec(`
+   await db.run(`
         INSERT INTO items (item, description, owner_id, image_url)
         VALUES ('Pælebor', 'Skal du grave huller til stolper eller lignende og er stærk (den er uden motor), så kan du låne denne', 2, 'https://photos.google.com/photo/AF1QipO5wiUkTT1keMOrqsepT_rys5aTR5JGJd7pe-UC')
    
    `);
 
-   await db.exec(`
+    await db.run(`
+        INSERT INTO items (item, description, owner_id, image_url)
+        VALUES ('Hækklipper', 'Let hækklipper (ledning)', 2, 'https://photos.google.com/photo/AF1QipNOhJX-VcCR0BwRG0LOo5r1M5N1OhR85-5yExuw')
+
+    `);
+
+    await db.run(`
+        INSERT INTO items (item, description, owner_id, image_url)
+        VALUES ('Symaskine', 'Gammel men velfungerende symaskine', 1, 'https://photos.google.com/photo/AF1QipNOhJX-VcCR0BwRG0LOo5r1M5N1OhR85-5yExuw')
+
+    `);
+
+   await db.run(`
         INSERT INTO reservations (item_id, start_date, end_date, requested_by)
-        VALUES (1,'2025-12-27T08:56:51.000Z', '2025-12-28T09:00:00.000Z',1);
+        VALUES (1,'2025-12-27', '2025-12-28',1);
+   `);
+
+    await db.run(`
+        INSERT INTO reservations (item_id, start_date, end_date, requested_by)
+        VALUES (3,'2025-12-25', '2025-12-27',2);
    `);
 }
 

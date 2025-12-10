@@ -1,5 +1,6 @@
 //Denne bruges til GET requests
 export async function fetchGet(url) {
+
     try {
         const response = await fetch(url, {
             credentials: 'include'
