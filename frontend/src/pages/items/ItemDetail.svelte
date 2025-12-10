@@ -24,6 +24,7 @@
             console.log("her er vi i ItemDetail.svelte")
 
             console.log("item der hentes", item);
+            console.log("itemId der skal hentes reservationer på:", params.id)
 
             reservations = await fetchGet(
                 `http://localhost:8080/reservations/item/${params.id}`
@@ -32,7 +33,11 @@
             console.log("reservations på item", reservations);
 
             convertReservationsToEvents();
-            options.events = events; // Opdater kalenderen
+            options = {
+                ...options,
+                events: [...events]
+            };
+
 
             console.log("events til kalenderen", events)
 
