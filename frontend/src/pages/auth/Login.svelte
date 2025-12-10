@@ -35,7 +35,12 @@
 
         toastr.success("Du er nu logget ind!");
 
-        console.log("her er jeg i Login.svelte og vil se sessionData", sessionData)
+        console.log("her er jeg i Login.svelte og vil se sessionData fra backend", sessionData)
+        console.log("her er jeg i Login.svelte og vil se data fra stores user.js")
+        console.log("her er jeg i Login.svelte og vil se stores user:", user)
+        console.log("her er jeg i Login.svelte og vil se stores loggedIn:", loggedIn)
+        console.log("her er jeg i Login.svelte og vil se stores role:", role)
+
 
         // redirect
         if (sessionData.user.role === "ADMIN") {
