@@ -9,6 +9,10 @@
 
     export let params;   // /items/:id
 
+    onMount(() => {
+        console.log("Mounted with params:", params);
+    });
+
     let item = null;
     let reservations = [];
     let events = [];
@@ -21,25 +25,15 @@
         try {
             const itemData = await fetchGet(`http://localhost:8080/items/${params.id}`);
 
-            if (!itemData || itemData.error) {
-                throw new Error("Kunne ikke hente item");
-            }
-
             item = itemData.data;
             console.log("her er vi i ItemDetail.svelte")
 
             console.log("item der hentes", item);
             console.log("itemId der skal hentes reservationer på:", params.id)
 
-            const resData = await fetchGet(
+            reservations = await fetchGet(
                 `http://localhost:8080/reservations/item/${params.id}`
             );
-
-            if (!resData || resData.error) {
-                throw new Error("Kunne ikke hente reservationer");
-            }
-
-            reservations = resData;
 
             console.log("reservations på item", reservations);
 
