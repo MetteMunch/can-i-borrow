@@ -17,6 +17,7 @@
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.19",
     "@fullcalendar/interaction": "^6.1.19",
+    "dotenv": "^17.2.3",
     "svelte-fullcalendar": "^3.0.0",
     "toastr": "^2.1.4"
   }

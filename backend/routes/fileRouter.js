@@ -12,6 +12,8 @@ router.get("/upload-url/:filename", isLoggedIn, async (req, res) => {
         console.error(error);
         res.status(500).send({ error: "Kunne ikke genererer url til uploaded fil" });
     }
+    console.log("ENV TEST fra backend:", process.env.HETZNER_BUCKET, process.env.HETZNER_ENDPOINT);
+
 });
 
 export default router;

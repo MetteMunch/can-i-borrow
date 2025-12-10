@@ -62,7 +62,7 @@
     <label for="password">Password</label>
     <input id="password" type="password" bind:value={password}/>
 
-    <button type="button" on:click={login}>Login</button>
+    <button type="button" onclick={login}>Login</button>
 
     <p>Ikke bruger endnu?
         <a href="/signup" class="signup-button">Opret bruger</a>
