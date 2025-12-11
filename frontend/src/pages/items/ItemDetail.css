@@ -1,101 +1,63 @@
-/* === PAGE LAYOUT === */
-
-.item-detail-container {
+/* GRID – 3 lige store kolonner */
+.item-detail-grid {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 3rem;
-    align-items: start;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
 }
 
-/* LEFT TEXT BLOCK */
-.item-info {
+/* FÆLLES BOKS-STYLING */
+.item-box {
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    width: 350px;
-    font-size: 1rem;
-    line-height: 1.4;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-height: 450px;
+    display: flex;              /* 🔥 Gør containeren fleksibel */
+    flex-direction: column;     /* 🔥 Elementer i lodret rækkefølge */
+    justify-content: space-between; /* 🔥 Skub "owner-block" ned i bunden */
+
 }
 
-.item-image {
+/* INFO-BOKS */
+.info-box h2 {
+    margin-top: 0;
+}
+
+.owner-block {
+    margin-top: 20px;
+    padding: 10px;
+    background: #edf8f0;
+    border-radius: 8px;
+}
+
+/* BILLEDE */
+.image-box img {
     width: 100%;
-    border-radius: 10px;
-    margin-bottom: 1rem;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
 }
 
-/* CALENDAR SECTION */
-.calendar-wrapper {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    width: 600px;
+/* KALENDER */
+.calendar-box {
+    position: relative;
 }
 
-/* === FULLCALENDAR OVERRIDES === */
+.request-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+.request-btn:hover {
+    background: #3c8a3f;
+}
 
+/* FullCalendar-tilpasning */
 .fc {
     background: transparent;
-}
-
-/* Header med måned + knapper */
-.fc-toolbar-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.fc-button {
-    background: #6d8f73 !important;
-    border: none !important;
-    color: white !important;
-    padding: 5px 10px;
-    border-radius: 6px !important;
-}
-
-.fc-button:hover {
-    background: #5c7d63 !important;
-}
-
-/* Days */
-.fc-daygrid-day {
-    background-color: rgba(255,255,255,0.8);
-    border: 1px solid #eee;
-}
-
-.fc-daygrid-day-number {
-    padding: 4px;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-/* Highlight selected range */
-.fc-highlight {
-    background: rgba(120, 170, 100, 0.3);
-}
-
-/* Events */
-.fc-event {
-    border-radius: 4px;
-    padding: 2px 4px;
-    font-size: 0.75rem;
-}
-
-.fc-event-title {
-    white-space: nowrap;
-}
-
-/* APPROVED event */
-.fc-event.approved {
-    background-color: rgb(75, 210, 75);
-    border: none;
-    color: white;
-}
-
-/* REQUESTED event */
-.fc-event.requested {
-    background-color: rgba(0, 123, 255, 0.8);
-    border: none;
-    color: white;
 }

@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:itemId", async (req, res) => {
-    const specificItem = await db.get("SELECT * FROM items WHERE id = ?", req.params.itemId);
+    const specificItem = await db.get("SELECT items.*, users.fullname AS owner_name, users.phone AS owner_phone FROM items JOIN users ON users.id = items.owner_id WHERE items.id = ?", req.params.itemId);
     res.status(200).send({
         data: specificItem
     });

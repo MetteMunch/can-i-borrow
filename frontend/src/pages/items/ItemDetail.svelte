@@ -9,16 +9,12 @@
 
     export let params;   // /items/:id
 
-    onMount(() => {
-        console.log("Mounted with params:", params);
-    });
-
     let item = null;
     let reservations = [];
     let events = [];
 
     // ----------------------------------------------------
-    // LOAD ITEM + RESERVATIONS FROM BACKEND
+    // HENTER DATA FRA BACKEND
     // ----------------------------------------------------
     async function loadData() {
 
@@ -26,16 +22,13 @@
             const itemData = await fetchGet(`http://localhost:8080/items/${params.id}`);
 
             item = itemData.data;
-            console.log("her er vi i ItemDetail.svelte")
 
-            console.log("item der hentes", item);
-            console.log("itemId der skal hentes reservationer på:", params.id)
+            console.log(item)
 
             reservations = await fetchGet(
                 `http://localhost:8080/reservations/item/${params.id}`
             );
-
-            console.log("reservations på item", reservations);
+            console.log("Reservations: ", reservations)
 
             convertReservationsToEvents();
             options = {
@@ -43,17 +36,15 @@
                 events: [...events]
             };
 
-
             console.log("events til kalenderen", events)
 
         }  catch (err) {
-        console.error("FEJL ved loadData:", err);
-        alert("Du skal være logget ind for at se detaljer om denne genstand.");
+        alert("Du skal være logget ind for at se dette.");
         }
 
     }
 
-    // Convert backend reservations → FullCalendar events
+    // Konverter reservationer til FullCalendar events
     function convertReservationsToEvents() {
         events = reservations.map(r => ({
             title: r.status === "APPROVED" ? "Approved reservation"
@@ -68,7 +59,7 @@
     onMount(loadData);
 
     // ----------------------------------------------------
-    // USER SELECTS NEW RESERVATION RANGE
+    // BRUGER VÆLGER DATOER
     // ----------------------------------------------------
     async function handleSelect(info) {
         const start = info.startStr;
@@ -95,7 +86,7 @@
         await loadData();
     }
 
-    // FullCalendar options
+    // Kalender opsætning
     let options = {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: "dayGridMonth",
@@ -106,22 +97,32 @@
     };
 </script>
 
-<div class="item-detail-container">
+<div class="item-detail-grid">
 
-    <!-- LEFT SIDE: INFO -->
-    <div class="item-info">
-        <h3>{item?.item}</h3>
+    <!-- VENSTRE: INFO -->
+    <div class="item-box info-box">
+        <h2>{item?.item}</h2>
         <p>{item?.description}</p>
+
+        <div class="owner-block">
+            <p><strong>Ejer:</strong> {item?.owner_name}</p>
+            <p><strong>Telefon:</strong> {item?.owner_phone}</p>
+        </div>
     </div>
 
-    <!-- MIDDLE: IMAGE -->
-    <div class="item-image">
-        <img src="{item?.image_url}" alt="Item billede" />
+    <!-- MIDTEN: BILLEDE -->
+    <div class="item-box image-box">
+        <img src={item?.image_url} alt="Genstand" />
     </div>
 
-    <!-- RIGHT SIDE: CALENDAR -->
-    <div class="calendar-wrapper">
+    <!-- HØJRE: KALENDER -->
+    <div class="item-box calendar-box">
+
+
         <FullCalendar {options} />
+        <button class="request-btn" onclick={startSelection}>
+            Send anmodning
+        </button>
     </div>
 
 </div>
