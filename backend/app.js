@@ -38,6 +38,11 @@ app.use("/reservations", reservationsRouter);
 import fileRouter from "./routes/fileRouter.js";
 app.use("/files", fileRouter);
 
+import uploadRouter from "./routes/localFileRouter.js";
+app.use("/uploads", uploadRouter);
+app.use("/uploads", express.static("uploads"));
+
+
 app.get("/test", (req, res) => {
     res.send({data: "Der er hul igennem til test"});
 });

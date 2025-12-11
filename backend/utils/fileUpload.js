@@ -17,5 +17,6 @@ export async function getUploadUrl(filename) {
         ContentType: "image/jpeg"
     });
 
+
     return await getSignedUrl(client, command, {expiresIn: 300});
 }

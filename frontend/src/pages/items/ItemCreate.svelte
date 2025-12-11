@@ -7,7 +7,6 @@
     let item = "";
     let description = "";
     let file = null;
-    let imageUrl = "";
     let preview = null;
 
     // Sætter preview
@@ -18,12 +17,21 @@
         }
     }
 
-    // Henter signed upload URL fra backend
-    async function getUploadUrl(filename) {
-        const res = await fetchRequestJson(
-            `http://localhost:8080/files/upload-url/${filename}`
-        );
-        return res.url;
+    // Upload billede til backend
+    async function uploadImage() {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const response = await fetch("http://localhost:8080/uploads/upload", {
+            method: "POST",
+            body: formData,
+            credentials: "include"
+        });
+
+        const data = await response.json();
+        console.log("URL fra backend i ItemCreate", data.url)
+        return data.url; // backend returnerer URL
+
     }
 
     // Opretter item i backend
@@ -33,29 +41,12 @@
             return;
         }
 
-        let image_url = "/default.png"; // fallback
+        let image_url = "/default.png";
 
-        // Hvis der er valgt et billede → upload til Hetzner
         if (file) {
-            const uploadUrl = await getUploadUrl(file.name);
-
-            await fetch(uploadUrl, {
-                method: "PUT",
-                headers: { "Content-Type": file.type },
-                body: file
-            });
-
-            // Her gemmer vi *den offentlige URL* til S3
-            const publicBase = import.meta.env.VITE_HETZNER_PUBLIC;
-
-
-            console.log("Her er jeg ItemCreate og vil se publicBase env", publicBase)
-
-            image_url = `${publicBase}/${file.name}`;
-            console.log ("Her er den fulde image url:", image_url)
+            image_url = await uploadImage();
         }
 
-        // Send item til backend
         const res = await fetchRequestJson(
             "http://localhost:8080/items",
             { item, description, image_url },
