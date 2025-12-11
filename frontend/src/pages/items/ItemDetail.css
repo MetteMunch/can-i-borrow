@@ -61,3 +61,64 @@
 .fc {
     background: transparent;
 }
+
+/* Header med måned + knapper */
+.fc-toolbar-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.fc-button {
+    background: #6d8f73 !important;
+    border: none !important;
+    color: white !important;
+    padding: 5px 10px;
+    border-radius: 6px !important;
+}
+
+.fc-button:hover {
+    background: #5c7d63 !important;
+}
+
+/* Days */
+.fc-daygrid-day {
+    background-color: rgba(255,255,255,0.8);
+    border: 1px solid #eee;
+}
+
+.fc-daygrid-day-number {
+    padding: 4px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Highlight selected range */
+.fc-highlight {
+    background: rgba(120, 170, 100, 0.3);
+}
+
+/* Events */
+.fc-event {
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 0.75rem;
+}
+
+.fc-event-title {
+    white-space: nowrap;
+}
+
+/* APPROVED event */
+.fc-event.approved {
+    background-color: rgb(75, 210, 75);
+    border: none;
+    color: white;
+}
+
+/* REQUESTED event */
+.fc-event.requested {
+    background-color: rgba(0, 123, 255, 0.8);
+    border: none;
+    color: white;
+}

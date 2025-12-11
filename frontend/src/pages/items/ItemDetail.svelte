@@ -46,15 +46,18 @@
 
     }
 
-    // Konverter reservationer til FullCalendar events
+    // Konverter reservationer til FullCalendar events med korrekt visning af slutdato
     function convertReservationsToEvents() {
-        events = reservations.map(r => ({
-            title: r.status === "APPROVED" ? "Approved reservation"
-                : r.status === "REQUESTED" ? "Requested" : "Reservation",
-            start: r.start_date,
-            end: r.end_date,
-            className: r.status.toLowerCase(),  // approved / requested
-        }));
+        events = reservations.map(r => {
+            const realEnd = new Date(r.end_date);
+            realEnd.setDate(realEnd.getDate() + 1);  // 🔥 gør end inklusiv
+
+            return {
+                start: r.start_date,
+                end: realEnd.toISOString().slice(0, 10), // ny slutdato
+                className: r.status.toLowerCase(),
+            };
+        });
 
     }
 
