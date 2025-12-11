@@ -12,6 +12,8 @@
     let item = null;
     let reservations = [];
     let events = [];
+    let startDate = null;
+    let endDate = null;
 
     // ----------------------------------------------------
     // HENTER DATA FRA BACKEND
@@ -59,32 +61,57 @@
     onMount(loadData);
 
     // ----------------------------------------------------
-    // BRUGER VÆLGER DATOER
+    // BRUGER VÆLGER DATOER TIL ANMODNING OM LÅN
     // ----------------------------------------------------
-    async function handleSelect(info) {
-        const start = info.startStr;
-        const end = info.endStr;
 
-        if (!confirm(`Anmode om lån fra ${start} til ${end}?`)) return;
+    function handleSelect(info) {
+        startDate = info.startStr;
+
+        // Fullcalender giver end som dagen efter det markerede område
+        const realEnd = new Date(info.end);
+        endDate = realEnd.toISOString().slice(0, 10);
+
+        console.log("Hvad er info end", info.end)
+        console.log("Valgt interval:", startDate, "→", endDate);
+
+    }
+
+    // ----------------------------------------------------
+    // ANMODNING SENDES
+    //----------------------------------------------------
+
+    async function sendRequest() {
+        console.log("Her er vi i sendRequest metoden")
+
+        if (!startDate || !endDate) {
+            alert("Vælg start og slut dato");
+            return;
+        }
+
 
         const res = await fetchRequestJson(
             "http://localhost:8080/reservations/request",
             {
                 item_id: params.id,
-                start_date: start,
-                end_date: end
+                start_date: startDate,
+                end_date: endDate
             },
             "POST"
         );
 
         if (res.error) {
-            alert("Kunne ikke oprette reservation.");
+            alert("Kunne ikke sende anmodning");
             return;
         }
 
-        alert("Anmodning sendt.");
+        alert("Anmodning sendt!");
+        startDate = null;
+        endDate = null;
+
         await loadData();
     }
+
+
 
     // Kalender opsætning
     let options = {
@@ -120,8 +147,8 @@
 
 
         <FullCalendar {options} />
-        <button class="request-btn" onclick={startSelection}>
-            Send anmodning
+        <button class="request-btn"
+                onclick={sendRequest}>Send anmodning
         </button>
     </div>
 
