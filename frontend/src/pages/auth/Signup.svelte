@@ -8,6 +8,8 @@
     let email = "";
     let password = "";
     let confirm = "";
+    let address = "";
+    let phone = "";
 
 
     const url = "http://localhost:8080/auth/signup";
@@ -19,7 +21,7 @@
             return;
         }
 
-        const body = {fullname, username, email, password};
+        const body = {fullname, username, email, password, address, phone };
 
         const res = await fetchRequestJson(url, body, "POST");
         const data = await res.json();
@@ -46,6 +48,12 @@
 
     <label for="email">Email</label>
     <input id="email" bind:value={email}/>
+
+    <label for="address">Adresse</label>
+    <input id="address" bind:value={address}/>
+
+    <label for="phone">Telefon</label>
+    <input id="phone" bind:value={phone}/>
 
     <label for="password">Password</label>
     <input id="password" type="password" bind:value={password}/>

@@ -72,24 +72,24 @@ if(updateTableMode) {
 }
 
 if(insertDataMode) {
-    const adminpassword = await bcrypt.hash(process.env.ADMINPASS, 14);
-    const userpassword = await bcrypt.hash(process.env.USERPASS, 14);
+   const adminpassword = await bcrypt.hash(process.env.ADMINPASS, 14);
+   const userpassword = await bcrypt.hash(process.env.USERPASS, 14);
 
-    await db.run(`
+   await db.run(`
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Mette Munch Hansen', 'Tøl70-1', 'admin@mail.dk', ? , 'ADMIN', 'Tølløsevej 70, 1', 29840737);
-    `,adminpassword);
+   `,adminpassword);
 
-    await db.run(`
+   await db.run(`
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Alm Bruger', 'Tøl66', 'alm@mail.dk', ?, 'USER', 'Tølløsevej 66', 12345678);
-    `,userpassword);
+   `,userpassword);
 
-    await db.run(`
+   await db.run(`
         INSERT INTO items (item, description, owner_id, image_url)
         VALUES ('Pælebor', 'Skal du grave huller til stolper eller lignende og er stærk (den er uden motor), så kan du låne denne', 2, 'https://photos.google.com/photo/AF1QipO5wiUkTT1keMOrqsepT_rys5aTR5JGJd7pe-UC')
-
-    `);
+   
+   `);
 
     await db.run(`
         INSERT INTO items (item, description, owner_id, image_url)
@@ -103,7 +103,7 @@ if(insertDataMode) {
 
     `);
 
-    await db.run(`
+   await db.run(`
         INSERT INTO reservations (item_id, start_date, end_date, requested_by)
         VALUES (1,'2025-12-27', '2025-12-28',1);
    `);
@@ -113,3 +113,4 @@ if(insertDataMode) {
         VALUES (3,'2025-12-25', '2025-12-27',2);
    `);
 }
+

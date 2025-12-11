@@ -14,9 +14,15 @@
         role.set(null);
         navigate("/login");
     }
+
+
 </script>
 
 
 <h1>Bruger Dashboard</h1>
 
-<button type="button" on:click={logout} class="signup-button">Log ud</button>
+<button type="button" onclick={logout} class="signup-button">Log ud</button>
+
+<button class="signup-button" onclick={() => navigate("/item-create")}>Opret ny genstand</button>
+
+

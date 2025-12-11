@@ -35,6 +35,13 @@
 
         toastr.success("Du er nu logget ind!");
 
+        console.log("her er jeg i Login.svelte og vil se sessionData fra backend", sessionData)
+        console.log("her er jeg i Login.svelte og vil se data fra stores user.js")
+        console.log("her er jeg i Login.svelte og vil se stores user:", user)
+        console.log("her er jeg i Login.svelte og vil se stores loggedIn:", loggedIn)
+        console.log("her er jeg i Login.svelte og vil se stores role:", role)
+
+
         // redirect
         if (sessionData.user.role === "ADMIN") {
             navigate("/AdminDashboard");
@@ -55,7 +62,7 @@
     <label for="password">Password</label>
     <input id="password" type="password" bind:value={password}/>
 
-    <button type="button" on:click={login}>Login</button>
+    <button type="button" onclick={login}>Login</button>
 
     <p>Ikke bruger endnu?
         <a href="/signup" class="signup-button">Opret bruger</a>
