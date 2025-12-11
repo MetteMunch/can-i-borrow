@@ -23,6 +23,8 @@
 
 <button type="button" onclick={logout} class="signup-button">Log ud</button>
 
+<button class="signup-button" onclick={() => navigate("/items")}>Se alle genstande</button>
+
 <button class="signup-button" onclick={() => navigate("/item-create")}>Opret ny genstand</button>
 
 

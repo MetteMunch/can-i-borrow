@@ -1,13 +1,13 @@
 import {Router} from 'express';
 import db from "../db/db.js";
-import { isLoggedIn } from "../middleware/auth.js";
+import {isLoggedIn} from "../middleware/auth.js";
 
 const router = Router();
 
 
 router.get("/", async (req, res) => {
-    const allItems = await db.all("SELECT * FROM items;");
-    res.send(allItems);
+    const allItems = await db.all("SELECT items.*, users.fullname AS owner_name FROM items JOIN users ON users.id = items.owner_id;");
+    res.send({ data: allItems });
 });
 
 router.get("/:itemId", async (req, res) => {
