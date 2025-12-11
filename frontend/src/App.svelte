@@ -66,6 +66,14 @@
             </MainLayout>
         </Route>
 
+        <Route path="/home">
+            <ProtectedRoute
+                    requiredRole="USER"
+                    component={Home}
+                    layout={MainLayout}
+            />
+        </Route>
+
         <Route path="/UserDashboard">
             <ProtectedRoute
                     requiredRole="USER"
