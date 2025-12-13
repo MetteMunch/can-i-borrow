@@ -14,8 +14,9 @@
     import ForgotPassword from "./pages/auth/ForgotPassword.svelte";
     import ResetDemo from "./pages/auth/ResetPasswordDemo.svelte";
     import ItemDetail from "./pages/items/ItemDetail.svelte";
-    import Calendertest from "./pages/items/Calendertest.svelte";
     import ItemCreate from "./pages/items/ItemCreate.svelte";
+    import ItemsList from "./pages/items/ItemsList.svelte";
+    import Logout from "./pages/auth/Logout.svelte";
 
 
     toastr.options = {
@@ -60,10 +61,24 @@
             </MainLayout>
         </Route>
 
+        <Route path="/logout">
+            <MainLayout>
+                <Logout/>
+            </MainLayout>
+        </Route>
+
         <Route path="/signup">
             <MainLayout>
                 <Signup/>
             </MainLayout>
+        </Route>
+
+        <Route path="/home">
+            <ProtectedRoute
+                    requiredRole="USER"
+                    component={Home}
+                    layout={MainLayout}
+            />
         </Route>
 
         <Route path="/UserDashboard">
@@ -92,12 +107,6 @@
             </MainLayout>
         </Route>
 
-        <Route path="/kalendertest">
-            <MainLayout>
-                <Calendertest />
-            </MainLayout>
-        </Route>
-
         <Route path="/item-details/:id" let:params>
             <MainLayout>
                 <ItemDetail {params}/>
@@ -107,6 +116,12 @@
         <Route path="/item-create">
             <MainLayout>
                 <ItemCreate />
+            </MainLayout>
+        </Route>
+
+        <Route path="/items">
+            <MainLayout>
+                <ItemsList />
             </MainLayout>
         </Route>
 
