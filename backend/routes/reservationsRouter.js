@@ -12,6 +12,26 @@ router.get("/item/:itemId", async (req, res) => {
     res.send(allReservationsSpecificItem);
 });
 
+router.get("/my-requests", isLoggedIn, async  (req,res) => {
+    const allMyRequests = await db.all(`
+    SELECT reservations.*, items.item, users.fullname AS owner_name FROM reservations
+    JOIN items ON items.id = reservations.item_id
+    JOIN users ON users.id = items.owner_id
+    WHERE reservations.requested_by = ? `, req.session.user.id);
+    console.log("Prøver at kalde allMyRequests", allMyRequests)
+    res.send({data: allMyRequests});
+});
+
+router.get("/my-loans", isLoggedIn, async  (req,res) => {
+    const allMyLoans = await db.all(`
+    SELECT reservations.*, items.item, users.fullname AS owner_name FROM reservations
+    JOIN items ON items.id = reservations.item_id
+    JOIN users ON users.id = items.owner_id
+    WHERE reservations.requested_by = ? AND reservations.status = 'APPROVED'`, req.session.user.id);
+    console.log("Prøver at alle kalde allMyLoans", allMyLoans);
+    res.send({data: allMyLoans});
+});
+
 
 
 router.post("/request", isLoggedIn, async (req, res) => {
