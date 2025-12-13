@@ -1,30 +1,144 @@
 <script>
     import { onMount } from "svelte";
-    import { fetchGet } from "../../utils/fetch.js";
+    import { fetchGet, fetchRequestJson } from "../../utils/fetch.js";
+    import toastr from "toastr";
+    import { confirmAction } from "../../utils/confirmAction.js";
+
     import "./UserDashboard.css";
 
     let myRequests = [];
-    let myLoans = [];
     let myItems = [];
+    let myReceivedRequests = [];
 
     async function loadDashboard() {
         const req = await fetchGet("http://localhost:8080/reservations/my-requests");
-        const loans = await fetchGet("http://localhost:8080/reservations/my-loans");
         const items = await fetchGet("http://localhost:8080/items/my-items");
+        const receivedReq = await fetchGet("http://localhost:8080/reservations/received")
 
         myRequests = req?.data || [];
-        myLoans = loans?.data || [];
         myItems = items?.data || [];
+        myReceivedRequests = receivedReq?.data || [];
     }
 
     onMount(loadDashboard);
+
+    async function approveRequest(id) {
+        const res = await fetchRequestJson(
+            `http://localhost:8080/reservations/${id}/approve`,
+            {},
+            "PUT"
+        );
+
+        if (!res.ok) {
+            toastr.error("Kunne ikke godkende anmodning");
+            return;
+        }
+
+        toastr.success("Anmodning godkendt");
+        loadDashboard(); // 🔁 opdater visning + kalender
+    }
+
+    async function declineRequest(id) {
+        const res = await fetchRequestJson(
+            `http://localhost:8080/reservations/${id}`,
+            {},
+            "DELETE"
+        );
+
+        if (!res.ok) {
+            toastr.error("Kunne ikke afslå anmodning");
+            return;
+        }
+
+        toastr.info("Anmodning afslået");
+        loadDashboard();
+    }
+
+    async function deleteLoan(id) {
+        const res = await fetchRequestJson(
+            `http://localhost:8080/reservations/${id}`,
+            {},
+            "DELETE"
+        );
+
+        if (!res.ok) {
+            toastr.error("Kunne ikke slette aftalt udlån");
+            return;
+        }
+
+        toastr.success("Udlån slettet");
+        loadDashboard();
+    }
+
+    // ================== CONFIRM WRAPPERS ==================
+
+    function confirmApprove(id) {
+        confirmAction("Vil du godkende denne anmodning?", () => approveRequest(id));
+    }
+
+    function confirmDecline(id) {
+        confirmAction("Vil du afslå denne anmodning?", () => declineRequest(id));
+    }
+
+    function confirmDelete(id) {
+        confirmAction("Vil du slette det aftalte udlån?", () => deleteLoan(id));
+    }
+
+
+
 </script>
 
 <h1>Min side</h1>
 
-<!-- ================== MINE ANMODNINGER ================== -->
+<!-- ================== MODTAGNE ANMODNINGER OG UDLÅN ================== -->
 <section class="box">
-    <h2>Mine anmodninger</h2>
+    <h2>Anmodninger modtaget og aftalte udlån</h2>
+
+    {#if myReceivedRequests.length === 0}
+        <p>Du har ikke modtaget anmodninger eller har aftalt nogle udlån.</p>
+    {:else}
+        <table>
+            <thead>
+            <tr>
+                <th>Genstand</th>
+                <th>Periode</th>
+                <th>Låner</th>
+                <th>Telefon</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {#each myReceivedRequests as r}
+                <tr>
+                    <td>{r.item}</td>
+                    <td>{r.start_date} → {r.end_date}</td>
+                    <td>{r.borrowers_name}</td>
+                    <td>{r.borrowers_phone}</td>
+                    <td>{r.status}</td>
+                    <td>
+                        {#if r.status === "REQUESTED"}
+                            <button class="icon-btn approve"
+                                    onclick={() => confirmApprove(r.id)}>✔</button>
+
+                            <button class="icon-btn decline"
+                                    onclick={() => confirmDecline(r.id)}>✖</button>
+                        {:else}
+                            <button class="icon-btn delete"
+                                    onclick={() => confirmDelete(r.id)}>🗑</button>
+                        {/if}
+                    </td>
+
+                </tr>
+            {/each}
+            </tbody>
+        </table>
+    {/if}
+</section>
+
+<section class="box">
+    <h2>Mine afsendte anmodninger og lån</h2>
 
     {#if myRequests.length === 0}
         <p>Du har ingen anmodninger.</p>
@@ -46,34 +160,6 @@
                     <td>{r.start_date} → {r.end_date}</td>
                     <td>{r.owner_name}</td>
                     <td>{r.status}</td>
-                </tr>
-            {/each}
-            </tbody>
-        </table>
-    {/if}
-</section>
-
-<!-- ================== MINE LÅN ================== -->
-<section class="box">
-    <h2>Mine lån</h2>
-
-    {#if myLoans.length === 0}
-        <p>Ingen aktive lån.</p>
-    {:else}
-        <table>
-            <thead>
-            <tr>
-                <th>Genstand</th>
-                <th>Periode</th>
-                <th>Låner</th>
-            </tr>
-            </thead>
-            <tbody>
-            {#each myLoans as l}
-                <tr>
-                    <td>{l.item}</td>
-                    <td>{l.start_date} → {l.end_date}</td>
-                    <td>{l.borrower}</td>
                 </tr>
             {/each}
             </tbody>

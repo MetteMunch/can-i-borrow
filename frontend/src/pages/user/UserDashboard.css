@@ -16,3 +16,24 @@ th, td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
+
+.icon-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+.icon-btn.approve {
+    color: green;
+}
+
+.icon-btn.decline {
+    color: red;
+}
+
+.icon-btn.delete {
+    color: darkred;
+}
+
