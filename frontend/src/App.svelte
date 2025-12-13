@@ -16,6 +16,7 @@
     import ItemDetail from "./pages/items/ItemDetail.svelte";
     import ItemCreate from "./pages/items/ItemCreate.svelte";
     import ItemsList from "./pages/items/ItemsList.svelte";
+    import Logout from "./pages/auth/Logout.svelte";
 
 
     toastr.options = {
@@ -57,6 +58,12 @@
         <Route path="/login">
             <MainLayout>
                 <Login/>
+            </MainLayout>
+        </Route>
+
+        <Route path="/logout">
+            <MainLayout>
+                <Logout/>
             </MainLayout>
         </Route>
 
