@@ -1,20 +1,9 @@
 <script>
     import { Link } from "svelte-routing";
-    import {user, loggedIn, role} from "../stores/user.js";
-    import {navigate} from "svelte-routing";
-
-    import {fetchRequestJson} from "../utils/fetch.js";
+    import {loggedIn, role} from "../stores/user.js";
 
 
-    let url = "http://localhost:8080/session/logout"
 
-    async function logout() {
-        await fetchRequestJson(url, {}, "POST");
-        user.set(null);
-        loggedIn.set(false);
-        role.set(null);
-        navigate("/login");
-    }
 </script>
 
 <div class="layout">
@@ -27,10 +16,17 @@
         </div>
 
         <nav class="nav">
-            <Link to="/home">HOME</Link>
-            <Link to="/login">LOGIN</Link>
-            <Link to="/logout">LOGOUT</Link>
-            <Link to="/signup">OPRET BRUGER</Link>
+            {#if !$loggedIn}
+                <Link to="/login">LOGIN</Link>
+
+            {:else}
+                <Link to="/home">HOME</Link>
+                <Link to="/logout">LOGOUT</Link>
+
+                {#if $role === "ADMIN"}
+                <Link to="/signup">OPRET BRUGER</Link>
+                {/if}
+            {/if}
         </nav>
     </header>
 

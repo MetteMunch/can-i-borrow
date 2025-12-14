@@ -61,15 +61,18 @@
         </Route>
 
         <Route path="/logout">
-            <MainLayout>
-                <Logout/>
-            </MainLayout>
+            <ProtectedRoute
+                    component={Logout}
+                    layout={MainLayout}
+            />
         </Route>
 
         <Route path="/signup">
-            <MainLayout>
-                <Signup/>
-            </MainLayout>
+            <ProtectedRoute
+                    requiredRole="ADMIN"
+                    component={Signup}
+                    layout={MainLayout}
+            />
         </Route>
 
         <Route path="/home">
@@ -105,15 +108,18 @@
         </Route>
 
         <Route path="/item-details/:id" let:params>
-            <MainLayout>
-                <ItemDetail {params}/>
-            </MainLayout>
+            <ProtectedRoute
+                    component={ItemDetail}
+                    layout={MainLayout}
+                    let:params
+            />
         </Route>
 
         <Route path="/item-create">
-            <MainLayout>
-                <ItemCreate />
-            </MainLayout>
+            <ProtectedRoute
+                    component={ItemCreate}
+                    layout={MainLayout}
+            />
         </Route>
 
 
