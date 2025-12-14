@@ -50,11 +50,11 @@
 
         <tbody>
         {#each filteredItems as i}
-            <tr onclick={() => goToItemDetails(i.id)}>
+            <tr>
                 <td>{i.item}</td>
                 <td>{i.description}</td>
                 <td>{i.owner_name}</td>
-                <td style="color: blue; text-decoration: underline;">Vis</td>
+                <td class="link" onclick={() => goToItemDetails(i.id)}>Vis</td>
             </tr>
         {/each}
         </tbody>

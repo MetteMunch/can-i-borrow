@@ -1,6 +1,8 @@
 <script>
     import { fetchRequestJson } from "../../utils/fetch.js";
     import { navigate } from "svelte-routing";
+    import toastr from "toastr";
+    import {goToMyPage} from "../../utils/navigation.js";
 
     import "./ItemCreate.css";
 
@@ -54,12 +56,14 @@
         );
 
         if (res.error) {
-            alert("Kunne ikke oprette item.");
+            toastr.error("Kunne ikke oprette item.");
             return;
         }
 
-        alert("Genstand oprettet!");
-        navigate("/UserDashboard");
+        toastr.success("Genstand oprettet!");
+
+        goToMyPage();
+
     }
 </script>
 

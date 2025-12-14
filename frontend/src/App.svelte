@@ -15,7 +15,6 @@
     import ResetDemo from "./pages/auth/ResetPasswordDemo.svelte";
     import ItemDetail from "./pages/items/ItemDetail.svelte";
     import ItemCreate from "./pages/items/ItemCreate.svelte";
-    import ItemsList from "./pages/items/ItemsList.svelte";
     import Logout from "./pages/auth/Logout.svelte";
 
 
@@ -51,7 +50,7 @@
     <div>
         <Route path="/">
             <MainLayout>
-                <Home/>
+                <Login/>
             </MainLayout>
         </Route>
 
@@ -74,14 +73,12 @@
         </Route>
 
         <Route path="/home">
-            <ProtectedRoute
-                    requiredRole="USER"
-                    component={Home}
-                    layout={MainLayout}
-            />
+            <MainLayout>
+                <Home/>
+            </MainLayout>
         </Route>
 
-        <Route path="/UserDashboard">
+        <Route path="/userdashboard">
             <ProtectedRoute
                     requiredRole="USER"
                     component={UserDashboard}
@@ -89,7 +86,7 @@
             />
         </Route>
 
-        <Route path="/AdminDashboard">
+        <Route path="/admindashboard">
             <ProtectedRoute
                     requiredRole="ADMIN"
                     component={AdminDashboard}
@@ -116,12 +113,6 @@
         <Route path="/item-create">
             <MainLayout>
                 <ItemCreate />
-            </MainLayout>
-        </Route>
-
-        <Route path="/items">
-            <MainLayout>
-                <ItemsList />
             </MainLayout>
         </Route>
 

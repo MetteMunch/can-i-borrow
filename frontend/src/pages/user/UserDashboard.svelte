@@ -2,9 +2,14 @@
     import { onMount } from "svelte";
     import { fetchGet, fetchRequestJson } from "../../utils/fetch.js";
     import toastr from "toastr";
-    import { confirmAction } from "../../utils/confirmAction.js";
+    import ConfirmDialog from "../../components/ConfirmDialog.svelte";
 
-    import "./UserDashboard.css";
+    import "./Dashboard.css";
+    import {navigate} from "svelte-routing";
+
+    let showConfirm = false;
+    let confirmMessage = "";
+    let confirmActionFn = null;
 
     let myRequests = [];
     let myItems = [];
@@ -46,11 +51,11 @@
         );
 
         if (!res.ok) {
-            toastr.error("Kunne ikke afslå anmodning");
+            toastr.error("fejl ifm afvisning af anmodning");
             return;
         }
 
-        toastr.info("Anmodning afslået");
+        toastr.info("Anmodning afvist");
         loadDashboard();
     }
 
@@ -62,7 +67,7 @@
         );
 
         if (!res.ok) {
-            toastr.error("Kunne ikke slette aftalt udlån");
+            toastr.error("fejl ifm sletning af aftalt udlån");
             return;
         }
 
@@ -73,18 +78,30 @@
     // ================== CONFIRM WRAPPERS ==================
 
     function confirmApprove(id) {
-        confirmAction("Vil du godkende denne anmodning?", () => approveRequest(id));
+        confirmMessage = "Vil du godkende denne anmodning?";
+        confirmActionFn = () => approveRequest(id);
+        showConfirm = true;
     }
 
     function confirmDecline(id) {
-        confirmAction("Vil du afslå denne anmodning?", () => declineRequest(id));
+        confirmMessage = "Vil du afslå denne anmodning?";
+        confirmActionFn = () => declineRequest(id);
+        showConfirm = true;
     }
 
     function confirmDelete(id) {
-        confirmAction("Vil du slette det aftalte udlån?", () => deleteLoan(id));
+        confirmMessage = "Vil du slette det aftalte udlån?";
+        confirmActionFn = () => deleteLoan(id);
+        showConfirm = true;
     }
 
+    function goToCreateItem() {
+        navigate("/item-create");
+    }
 
+    function goToItemDetails(id) {
+        navigate(`/item-details/${id}`);
+    }
 
 </script>
 
@@ -180,6 +197,7 @@
                 <th>Genstand</th>
                 <th>Beskrivelse</th>
                 <th>Oprettet</th>
+                <th>Vis</th>
             </tr>
             </thead>
 
@@ -189,11 +207,26 @@
                     <td>{i.item}</td>
                     <td>{i.description}</td>
                     <td>{i.created_at}</td>
+                    <td class="link" onclick={() => goToItemDetails(i.id)}>Vis</td>
                 </tr>
             {/each}
             </tbody>
         </table>
     {/if}
+    <button class="signup-button" onclick={goToCreateItem}>Opret ny genstand</button>
 </section>
 
+<!-- ================== CONFIRM DIALOG ================== -->
+{#if showConfirm}
+    <ConfirmDialog
+            message={confirmMessage}
+            onConfirm={() => {
+            showConfirm = false;
+            confirmActionFn?.();
+        }}
+            onCancel={() => {
+            showConfirm = false;
+        }}
+    />
+{/if}
 
