@@ -150,3 +150,10 @@ a:hover {
 .signup-button:hover {
   background-color: #1976D2;
 }
+
+.link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+

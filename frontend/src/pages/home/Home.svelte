@@ -2,6 +2,8 @@
     import { onMount } from "svelte";
     import { fetchGet } from "../../utils/fetch.js";
     import { navigate } from "svelte-routing";
+    import { goToMyPage} from "../../utils/navigation.js";
+
 
     import "./Home.css";
 
@@ -31,9 +33,6 @@
         navigate("/item-create");
     }
 
-    function goToMyPage() {
-        navigate("/userdashboard");
-    }
 </script>
 
 <div class="home-grid">

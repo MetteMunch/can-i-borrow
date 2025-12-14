@@ -3,6 +3,7 @@
     import {fetchRequestJson, fetchGet} from "../../utils/fetch.js";
     import {navigate} from "svelte-routing";
     import toastr from 'toastr';
+    import {goToMyPage} from "../../utils/navigation.js";
 
     let username = "";
     let password = "";
@@ -35,19 +36,7 @@
 
         toastr.success("Du er nu logget ind!");
 
-        console.log("her er jeg i Login.svelte og vil se sessionData fra backend", sessionData)
-        console.log("her er jeg i Login.svelte og vil se data fra stores user.js")
-        console.log("her er jeg i Login.svelte og vil se stores user:", user)
-        console.log("her er jeg i Login.svelte og vil se stores loggedIn:", loggedIn)
-        console.log("her er jeg i Login.svelte og vil se stores role:", role)
-
-
-        // redirect
-        if (sessionData.user.role === "ADMIN") {
-            navigate("/AdminDashboard");
-        } else {
-            navigate("/UserDashboard");
-        }
+        goToMyPage();
 
     }
 </script>

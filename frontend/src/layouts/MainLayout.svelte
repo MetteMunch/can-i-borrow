@@ -1,6 +1,7 @@
 <script>
     import { Link } from "svelte-routing";
     import {user, loggedIn, role} from "../stores/user.js";
+    import {navigate} from "svelte-routing";
 
     import {fetchRequestJson} from "../utils/fetch.js";
 
@@ -26,7 +27,7 @@
         </div>
 
         <nav class="nav">
-            <Link to="/">HOME</Link>
+            <Link to="/home">HOME</Link>
             <Link to="/login">LOGIN</Link>
             <Link to="/logout">LOGOUT</Link>
             <Link to="/signup">OPRET BRUGER</Link>
