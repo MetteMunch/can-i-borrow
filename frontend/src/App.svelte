@@ -16,7 +16,8 @@
     import ItemDetail from "./pages/items/ItemDetail.svelte";
     import ItemCreate from "./pages/items/ItemCreate.svelte";
     import Logout from "./pages/auth/Logout.svelte";
-
+    import {onMount} from "svelte";
+    import {socket} from "./utils/socket.js";
 
     toastr.options = {
         closeButton: true,
@@ -40,6 +41,33 @@
             loggedIn.set(false);
             role.set(null);
         }
+    });
+
+    onMount(() => {
+        const unsubscribe = loggedIn.subscribe(isLoggedIn => {
+            if (isLoggedIn && !socket.connected) {
+                socket.connect();
+            }
+        });
+
+        socket.on("new-loan-request", (data) => {
+            toastr.info(`Ny låneanmodning på "${data.item}"`);
+        });
+
+        socket.on("request-approved", (data) => {
+            toastr.success(`Din anmodning på "${data.item}" er godkendt`);
+        });
+
+        socket.on("request-declined", (data) => {
+            toastr.warning(`Din anmodning på "${data.item}" blev afvist`);
+        });
+
+        return () => {
+            unsubscribe();
+            socket.off("new-loan-request");
+            socket.off("request-approved");
+            socket.off("request-declined");
+        };
     });
 
 </script>

@@ -6,7 +6,6 @@
     import { navigate } from "svelte-routing";
 
     import "../user/Dashboard.css";
-    import {socket} from "../../utils/socket.js";
 
     let showConfirm = false;
     let confirmMessage = "";
@@ -27,33 +26,6 @@
     }
 
     onMount(loadDashboard);
-
-    onMount(() => {
-        if (!socket.connected) {
-            socket.connect();
-        }
-
-        socket.on("new-loan-request", (data) => {
-            toastr.info(`Ny låneanmodning på "${data.item}"`);
-            loadDashboard(); // opdatér listen
-        });
-
-        socket.on("request-approved", (data) => {
-            toastr.success(`Din anmodning på "${data.item}" er godkendt`);
-            loadDashboard();
-        });
-
-        socket.on("request-declined", (data) => {
-            toastr.warning(`Din anmodning på "${data.item}" blev afvist`);
-            loadDashboard();
-        });
-
-        return () => {
-            socket.off("new-loan-request");
-            socket.off("request-approved");
-            socket.off("request-declined");
-        };
-    });
 
     async function approveRequest(id) {
         const res = await fetchRequestJson(
