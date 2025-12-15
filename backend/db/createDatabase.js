@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import  db  from './db.js';
+import db from './db.js';
 import bcrypt from 'bcryptjs';
 
 // db.exec - kører DCL og DDL quiries mod databasen (DDL er oprettelse af tabeller mm, og DCL er oprettelse og auth af brugere
@@ -18,22 +18,22 @@ const deleteTableMode = process.argv.includes('delete'); //når vi kører i dett
 const updateTableMode = process.argv.includes('update'); //når vi kører i dette mode, så oprettes tabeller
 const insertDataMode = process.argv.includes('insert'); //når vi kører i dette mode, så indsætter vi init data
 
-if(deleteTableMode) {
-    await db.exec(`
+if (deleteTableMode) {
+  await db.exec(`
         DROP TABLE IF EXISTS reservations;
     `);
 
-    await db.exec(`
+  await db.exec(`
         DROP TABLE IF EXISTS items;
     `);
 
-    await db.exec(`
+  await db.exec(`
         DROP TABLE IF EXISTS users;
     `);
 }
 
-if(updateTableMode) {
-    await db.exec(`
+if (updateTableMode) {
+  await db.exec(`
         CREATE TABLE IF NOT EXISTS users
         (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -71,61 +71,75 @@ if(updateTableMode) {
     `);
 }
 
-if(insertDataMode) {
-   const adminpassword = await bcrypt.hash(process.env.ADMINPASS, 14);
-   const userpassword = await bcrypt.hash(process.env.USERPASS, 14);
+if (insertDataMode) {
+  const adminpassword = await bcrypt.hash(process.env.ADMINPASS, 14);
+  const userpassword = await bcrypt.hash(process.env.USERPASS, 14);
 
-   await db.run(`
+  await db.run(
+    `
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Fam. Munch', 'Tøl70-1', 'admin@mail.dk', ? , 'ADMIN', 'Tølløsevej 70, 1', 29840737);
-   `,adminpassword);
+   `,
+    adminpassword
+  );
 
-   await db.run(`
+  await db.run(
+    `
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Hr Hansen', 'Tøl66', 'alm@mail.dk', ?, 'USER', 'Tølløsevej 66', 12345678);
-   `,userpassword);
+   `,
+    userpassword
+  );
 
-    await db.run(`
+  await db.run(
+    `
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Fru Larsen', 'Tøl57', 'alm@mail1.dk', ?, 'USER', 'Tølløsevej 57', 87654321);
-   `,userpassword);
+   `,
+    userpassword
+  );
 
-    await db.run(`
+  await db.run(
+    `
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Hr Ahmed ', 'Tøl55', 'alm@mail2.dk', ?, 'USER', 'Tølløsevej 55', 52784519);
-   `,userpassword);
+   `,
+    userpassword
+  );
 
-    await db.run(`
+  await db.run(
+    `
         INSERT INTO users (fullname, username, email, password, role, address, phone)
         VALUES ('Fru Brown ', 'Tøl56', 'alm@mail3.dk', ?, 'USER', 'Tølløsevej 56', 58974623);
-   `,userpassword);
+   `,
+    userpassword
+  );
 
-   // await db.run(`
-   //      INSERT INTO items (item, description, owner_id, image_url)
-   //      VALUES ('Pælebor', 'Skal du grave huller til stolper eller lignende og er stærk (den er uden motor), så kan du låne denne', 2, 'https://photos.google.com/photo/AF1QipO5wiUkTT1keMOrqsepT_rys5aTR5JGJd7pe-UC')
-   //
-   // `);
+  // await db.run(`
+  //      INSERT INTO items (item, description, owner_id, image_url)
+  //      VALUES ('Pælebor', 'Skal du grave huller til stolper eller lignende og er stærk (den er uden motor), så kan du låne denne', 2, 'https://photos.google.com/photo/AF1QipO5wiUkTT1keMOrqsepT_rys5aTR5JGJd7pe-UC')
+  //
+  // `);
 
-   //  await db.run(`
-   //      INSERT INTO items (item, description, owner_id, image_url)
-   //      VALUES ('Hækklipper', 'Let hækklipper (ledning)', 2, 'https://photos.google.com/photo/AF1QipNOhJX-VcCR0BwRG0LOo5r1M5N1OhR85-5yExuw')
-   //
-   //  `);
-   //
-   //  await db.run(`
-   //      INSERT INTO items (item, description, owner_id, image_url)
-   //      VALUES ('Symaskine', 'Gammel men velfungerende symaskine', 1, 'https://photos.google.com/photo/AF1QipNOhJX-VcCR0BwRG0LOo5r1M5N1OhR85-5yExuw')
-   //
-   //  `);
-   //
-   // await db.run(`
-   //      INSERT INTO reservations (item_id, start_date, end_date, requested_by)
-   //      VALUES (1,'2025-12-27', '2025-12-28',1);
-   // `);
-   //
-   //  await db.run(`
-   //      INSERT INTO reservations (item_id, start_date, end_date, requested_by)
-   //      VALUES (3,'2025-12-25', '2025-12-27',2);
-   // `);
+  //  await db.run(`
+  //      INSERT INTO items (item, description, owner_id, image_url)
+  //      VALUES ('Hækklipper', 'Let hækklipper (ledning)', 2, 'https://photos.google.com/photo/AF1QipNOhJX-VcCR0BwRG0LOo5r1M5N1OhR85-5yExuw')
+  //
+  //  `);
+  //
+  //  await db.run(`
+  //      INSERT INTO items (item, description, owner_id, image_url)
+  //      VALUES ('Symaskine', 'Gammel men velfungerende symaskine', 1, 'https://photos.google.com/photo/AF1QipNOhJX-VcCR0BwRG0LOo5r1M5N1OhR85-5yExuw')
+  //
+  //  `);
+  //
+  // await db.run(`
+  //      INSERT INTO reservations (item_id, start_date, end_date, requested_by)
+  //      VALUES (1,'2025-12-27', '2025-12-28',1);
+  // `);
+  //
+  //  await db.run(`
+  //      INSERT INTO reservations (item_id, start_date, end_date, requested_by)
+  //      VALUES (3,'2025-12-25', '2025-12-27',2);
+  // `);
 }
-
