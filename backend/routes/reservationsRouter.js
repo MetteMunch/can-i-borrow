@@ -19,7 +19,6 @@ router.get("/my-requests", isLoggedIn, async (req, res) => {
                  JOIN items ON items.id = reservations.item_id
                  JOIN users ON users.id = items.owner_id
         WHERE reservations.requested_by = ? `, req.session.user.id);
-    console.log("Prøver at kalde allMyRequests", allMyRequests)
     res.send({data: allMyRequests});
 });
 
@@ -72,9 +71,16 @@ router.put("/:reservationId/approve", async (req, res) => {
         WHERE id = ?`, req.params.reservationId);
 
     const getAppReservation = await db.get(`
-        SELECT *
+        SELECT reservations.id, reservations.requested_by, items.item
         FROM reservations
-        WHERE id = ?`, req.params.reservationId);
+        JOIN items ON items.id = reservations.item_id
+        WHERE reservations.id = ?`, req.params.reservationId);
+
+    const io = req.app.get("io");
+    io.to(`user-${getAppReservation.requested_by}`)
+        .emit("request-approved", {
+            item: getAppReservation.item
+        });
 
     res.status(200).send({
         message: "request approved",
@@ -83,10 +89,22 @@ router.put("/:reservationId/approve", async (req, res) => {
 });
 
 router.delete("/:reservationId", isLoggedIn, async (req, res) => {
+    const reservationInfo = await db.get(`
+        SELECT reservations.requested_by,
+               items.item
+        FROM reservations
+        JOIN items ON items.id = reservations.item_id
+        WHERE reservations.id = ?`, req.params.reservationId);
+
     await db.run(`
         DELETE FROM reservations
-        WHERE id = ?
-    `, req.params.reservationId);
+        WHERE id = ?`, req.params.reservationId);
+
+    const io = req.app.get("io");
+    io.to(`user-${reservationInfo.requested_by}`)
+        .emit("request-declined", {
+            item: reservationInfo.item
+        });
 
     res.send({ message: "Reservation deleted" });
 });
