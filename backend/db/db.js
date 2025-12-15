@@ -3,9 +3,8 @@ import { open } from 'sqlite';
 
 // Åbn database
 const db = await open({
-    filename: './database.db',
-    driver: sqlite3.Database
+  filename: './database.db',
+  driver: sqlite3.Database,
 });
 
 export default db;
-

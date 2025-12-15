@@ -1,60 +1,61 @@
 .page-container {
-    background: #d9e8d1;
-    padding: 30px;
+  background: #d9e8d1;
+  padding: 30px;
 }
 
 .search-box {
-    width: 300px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #999;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  width: 300px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #999;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    font-size: 15px;
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 15px;
 }
 
 th {
-    background: #6d8f73;
-    color: white;
+  background: #6d8f73;
+  color: white;
 }
 
 tr:hover {
-    background: #f3f7f4;
-    cursor: pointer;
+  background: #f3f7f4;
+  cursor: pointer;
 }
 
 .create-btn {
-    margin-top: 20px;
-    padding: 12px 20px;
-    background: #4CAF50;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #4caf50;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 }
 .create-btn:hover {
-    background: #3c8a3f;
+  background: #3c8a3f;
 }
 
 .center {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
