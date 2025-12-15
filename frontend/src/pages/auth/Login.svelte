@@ -3,7 +3,7 @@
     import {fetchRequestJson, fetchGet} from "../../utils/fetch.js";
     import {navigate} from "svelte-routing";
     import toastr from 'toastr';
-    import {goToMyPage} from "../../utils/navigation.js";
+    import { socket} from "../../utils/socket.js";
 
     let username = "";
     let password = "";
@@ -35,8 +35,9 @@
         role.set(sessionData.user.role);
 
         toastr.success("Du er nu logget ind!");
+        socket.connect();
 
-        goToMyPage();
+        navigate("/home");
 
     }
 </script>

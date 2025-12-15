@@ -1,6 +1,7 @@
 <script>
     import {user, loggedIn, role} from "../../stores/user.js";
     import {navigate} from "svelte-routing";
+    import { socket} from "../../utils/socket.js";
 
     import {fetchRequestJson} from "../../utils/fetch.js";
 
@@ -13,6 +14,7 @@
         user.set(null);
         loggedIn.set(false);
         role.set(null);
+        socket.disconnect();
         navigate("/login");
     }
 
