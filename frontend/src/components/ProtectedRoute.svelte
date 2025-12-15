@@ -1,22 +1,20 @@
 <script>
-    import { loggedIn, role } from "../stores/user.js";
-    import { navigate } from "svelte-routing";
-    export let component;     // dashboard komponent
-    export let requiredRole;  // "ADMIN", "USER" eller null
-    export let layout = null; // optional MainLayout
-    export let params = null;
+  import { loggedIn, role } from '../stores/user.js';
+  import { navigate } from 'svelte-routing';
+  export let component; // dashboard komponent
+  export let requiredRole; // "ADMIN", "USER" eller null
+  export let layout = null; // optional MainLayout
+  export let params = null;
 </script>
 
 {#if $loggedIn === false}
-    {navigate("/login")}
+  {navigate('/login')}
 {:else if requiredRole && $role !== requiredRole}
-    {navigate("/login")}
+  {navigate('/login')}
+{:else if layout}
+  <svelte:component this={layout}>
+    <svelte:component this={component} {params} />
+  </svelte:component>
 {:else}
-    {#if layout}
-        <svelte:component this={layout}>
-            <svelte:component this={component} {params} />
-        </svelte:component>
-    {:else}
-        <svelte:component this={component} {params} />
-    {/if}
+  <svelte:component this={component} {params} />
 {/if}

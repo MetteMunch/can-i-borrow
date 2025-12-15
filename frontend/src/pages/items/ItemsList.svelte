@@ -1,66 +1,68 @@
 <script>
-    import { onMount } from "svelte";
-    import { fetchGet } from "../../utils/fetch.js";
-    import { navigate } from "svelte-routing";
+  import { onMount } from 'svelte';
+  import { fetchGet } from '../../utils/fetch.js';
+  import { navigate } from 'svelte-routing';
 
-    import "./ItemsList.css";
+  import './ItemsList.css';
 
-    let items = [];
-    let search = "";
+  let items = [];
+  let search = '';
 
-    async function loadItems() {
-        const res = await fetchGet("http://localhost:8080/items");
-        items = res.data || [];
-        console.log("Jeg er i ItemsList og vil se items", items)
-    }
+  async function loadItems() {
+    const res = await fetchGet('http://localhost:8080/items');
+    items = res.data || [];
+    console.log('Jeg er i ItemsList og vil se items', items);
+  }
 
-    onMount(loadItems);
+  onMount(loadItems);
 
-    // Søgefilter
-    $: filteredItems = items.filter(i =>
-        i.item.toLowerCase().includes(search.toLowerCase()) ||
-        i.description.toLowerCase().includes(search.toLowerCase()) ||
-        i.owner_name?.toLowerCase().includes(search.toLowerCase())
-    );
+  // Søgefilter
+  $: filteredItems = items.filter(
+    (i) =>
+      i.item.toLowerCase().includes(search.toLowerCase()) ||
+      i.description.toLowerCase().includes(search.toLowerCase()) ||
+      i.owner_name?.toLowerCase().includes(search.toLowerCase())
+  );
 
-    function goToItemDetails(id) {
-        navigate(`/item-details/${id}`);
-    }
+  function goToItemDetails(id) {
+    navigate(`/item-details/${id}`);
+  }
 
-    function goToCreateItem() {
-        navigate("/item-create");
-    }
+  function goToCreateItem() {
+    navigate('/item-create');
+  }
 </script>
 
 <div class="page-container">
+  <input
+    class="search-box"
+    placeholder="Søg efter genstand, beskrivelse eller ejer..."
+    bind:value={search}
+  />
 
-    <input class="search-box"
-           placeholder="Søg efter genstand, beskrivelse eller ejer..."
-           bind:value={search} />
+  <table>
+    <thead>
+      <tr>
+        <th>Genstand</th>
+        <th>Beskrivelse</th>
+        <th>Ejer</th>
+        <th>Åbn</th>
+      </tr>
+    </thead>
 
-    <table>
-        <thead>
+    <tbody>
+      {#each filteredItems as i}
         <tr>
-            <th>Genstand</th>
-            <th>Beskrivelse</th>
-            <th>Ejer</th>
-            <th>Åbn</th>
+          <td>{i.item}</td>
+          <td>{i.description}</td>
+          <td>{i.owner_name}</td>
+          <td class="link" onclick={() => goToItemDetails(i.id)}>Vis</td>
         </tr>
-        </thead>
+      {/each}
+    </tbody>
+  </table>
 
-        <tbody>
-        {#each filteredItems as i}
-            <tr>
-                <td>{i.item}</td>
-                <td>{i.description}</td>
-                <td>{i.owner_name}</td>
-                <td class="link" onclick={() => goToItemDetails(i.id)}>Vis</td>
-            </tr>
-        {/each}
-        </tbody>
-    </table>
-
-    <div class="center">
-        <button class="create-btn" onclick={goToCreateItem}>Opret ny genstand</button>
-    </div>
+  <div class="center">
+    <button class="create-btn" onclick={goToCreateItem}>Opret ny genstand</button>
+  </div>
 </div>

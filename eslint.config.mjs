@@ -1,13 +1,14 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import prettier from 'eslint-plugin-prettier';
-import svelte from 'eslint-plugin-svelte';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import sveltePlugin from 'eslint-plugin-svelte';
 import svelteParser from 'svelte-eslint-parser';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   // ===============================
-  // JavaScript (Node + Browser)
+  // JavaScript files
   // ===============================
   {
     files: ['**/*.{js,mjs,cjs}'],
@@ -20,17 +21,18 @@ export default defineConfig([
       },
     },
     plugins: {
-      prettier,
+      prettier: prettierPlugin,
     },
     rules: {
       ...js.configs.recommended.rules,
+      ...prettierConfig.rules,
       'prettier/prettier': 'error',
       'no-console': 'off',
     },
   },
 
   // ===============================
-  // Svelte
+  // Svelte files
   // ===============================
   {
     files: ['**/*.svelte'],
@@ -40,14 +42,16 @@ export default defineConfig([
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
+      globals: {
+        ...globals.browser,
+      },
     },
     plugins: {
-      svelte,
-      prettier,
+      svelte: sveltePlugin,
     },
     rules: {
-      ...svelte.configs.recommended.rules,
-      'prettier/prettier': 'error',
+      // ESLint må analysere Svelte,
+      // men Prettier kører separat via CLI
     },
   },
 ]);

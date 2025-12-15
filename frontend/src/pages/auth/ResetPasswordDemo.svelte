@@ -3,4 +3,5 @@
   <p>Denne side er kun en visuel demo.</p>
 
   <p>Her ville der normalt være felter til at indtaste et nyt password.</p>
-</div>;
+</div>
+;
