@@ -4,6 +4,7 @@
     import FullCalendar from 'svelte-fullcalendar';
     import dayGridPlugin from '@fullcalendar/daygrid';
     import interactionPlugin from '@fullcalendar/interaction';
+    import toastr from "toastr";
 
     import "./ItemDetail.css";
 
@@ -48,11 +49,11 @@
     function convertReservationsToEvents() {
         events = reservations.map(r => {
             const realEnd = new Date(r.end_date);
-            realEnd.setDate(realEnd.getDate() + 1);  // 🔥 gør end inklusiv
+            realEnd.setDate(realEnd.getDate() + 1);
 
             return {
                 start: r.start_date,
-                end: realEnd.toISOString().slice(0, 10), // ny slutdato
+                end: realEnd.toISOString().slice(0, 10),
                 className: r.status.toLowerCase(),
             };
         });
@@ -79,10 +80,9 @@
     //----------------------------------------------------
 
     async function sendRequest() {
-        console.log("Her er vi i sendRequest metoden")
 
         if (!startDate || !endDate) {
-            alert("Vælg start og slut dato");
+            toastr.error("Vælg start og slut dato");
             return;
         }
 
@@ -97,12 +97,12 @@
             "POST"
         );
 
-        if (res.error) {
-            alert("Kunne ikke sende anmodning");
+        if (!res.ok) {
+            toastr.error("Kunne ikke sende anmodning");
             return;
         }
 
-        alert("Anmodning sendt!");
+        toastr.success("Anmodning sendt!");
         startDate = null;
         endDate = null;
 
@@ -125,7 +125,7 @@
 
     <!-- VENSTRE: INFO -->
     <div class="item-box info-box">
-        <h2>{item?.item}</h2>
+        <h1>{item?.item}</h1>
         <p>{item?.description}</p>
 
         <div class="owner-block">

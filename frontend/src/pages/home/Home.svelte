@@ -39,7 +39,7 @@
 
     <!-- =============== VENSTRE TEKST =============== -->
     <div class="left-box">
-        <h2>Velkommen til Lånebørsen</h2>
+        <h1>Velkommen til Lånebørsen</h1>
 
         <p>
             Vi er samlet 40 grundejere i foreningen, og på denne side har vi mulighed

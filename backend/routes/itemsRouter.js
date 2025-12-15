@@ -12,7 +12,6 @@ router.get("/", async (req, res) => {
 
 router.get("/my-items", isLoggedIn, async (req, res) => {
     const allOfMyItems = await db.all(`SELECT * FROM items WHERE owner_id = ?`, req.session.user.id);
-    console.log("Prøver at hente alle mine items", allOfMyItems)
     res.send({
         data: allOfMyItems
     });
