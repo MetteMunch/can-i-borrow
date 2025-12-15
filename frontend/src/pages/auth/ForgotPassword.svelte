@@ -25,7 +25,7 @@
   <label for="email">Indtast din email</label>
   <input id="email" bind:value={email} />
 
-  <button type="button" on:click={sendMail}> Send mig en email </button>
+  <button type="button" onclick={sendMail}> Send mig en email </button>
 
   <p>
     <a href="/login">Tilbage til login</a>
