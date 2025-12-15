@@ -12,7 +12,7 @@
     <header class="header">
 
         <div class="logo">
-            <img src="/house.png" alt="hus logo">
+            <img src="/logo.png" alt="EF logo">
         </div>
 
         <nav class="nav">

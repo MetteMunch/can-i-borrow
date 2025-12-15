@@ -1,8 +1,7 @@
 
-
-
 /* ===== GLOBAL RESET ===== */
 :root {
+  font-size: 150%;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   line-height: 1.5;
@@ -13,6 +12,25 @@
 body {
   margin: 0;
   padding: 0;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 2rem;          /* 48px */
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.333rem;      /* 32px */
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.1rem;        /* ~26px */
+}
+
+p, td, th, label {
+  font-size: 1rem;          /* 24px */
 }
 
 /* ===== LINKS ===== */
@@ -49,7 +67,7 @@ a:hover {
 }
 
 .logo img {
-  height: 60px;          /* gør billedet lille og pænt */
+  height: 70px;          /* gør billedet lille og pænt */
   width: auto;           /* bevarer proportioner */
   display: block;
   object-fit: contain;   /* gør at billedet ikke strækker */
@@ -63,7 +81,7 @@ a:hover {
   border-radius: 4px;
   border: 1px solid #555;
   color: black;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 .nav a:hover {
   background: #eee;
@@ -79,7 +97,7 @@ a:hover {
 /* ===== FOOTER ===== */
 .footer {
   background-color: #6d8f73;
-  padding: 20px;
+  padding: 60px;
   text-align: left;
   color: black;
 }

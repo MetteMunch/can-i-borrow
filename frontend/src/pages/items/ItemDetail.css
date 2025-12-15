@@ -12,6 +12,7 @@
     border-radius: 14px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     min-height: 450px;
+    max-height: 960px;
     display: flex;              /* 🔥 Gør containeren fleksibel */
     flex-direction: column;     /* 🔥 Elementer i lodret rækkefølge */
     justify-content: space-between; /* 🔥 Skub "owner-block" ned i bunden */
