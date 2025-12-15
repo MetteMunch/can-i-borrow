@@ -2,9 +2,21 @@
   "name": "fullstack-app",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm --prefix backend start\" \"npm --prefix frontend run dev\""
+    "dev": "concurrently \"npm --prefix backend start\" \"npm --prefix frontend run dev\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@eslint/js": "^9.39.2",
+    "concurrently": "^8.2.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-svelte": "^3.13.1",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4",
+    "svelte": "^5.46.0",
+    "svelte-eslint-parser": "^1.4.1"
   }
 }
