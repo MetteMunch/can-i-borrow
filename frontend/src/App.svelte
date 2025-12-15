@@ -111,7 +111,7 @@
             <ProtectedRoute
                     component={ItemDetail}
                     layout={MainLayout}
-                    let:params
+                    {params}
             />
         </Route>
 

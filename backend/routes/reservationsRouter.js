@@ -41,14 +41,21 @@ router.post("/request", isLoggedIn, async (req, res) => {
             INSERT INTO reservations (item_id, start_date, end_date, requested_by)
             VALUES (?, ?, ?, ?)`, item_id, start_date, end_date, req.session.user.id);
 
-        const getRequest = await db.get(`
-            SELECT *
+        const reservationInfo
+            = await db.get(`
+            SELECT reservations.*, items.item, items.owner_id
             FROM reservations
-            WHERE id = ?`, makeRequest.lastID);
+            JOIN items ON items.id = reservations.item_id
+            WHERE reservations.id = ?`, makeRequest.lastID);
+
+        const io = req.app.get("io");
+        io.to(`user-${reservationInfo.owner_id}`).emit("new-loan-request", {
+            item: reservationInfo.item
+        });
 
         res.status(201).send({
             message: "request created",
-            request: getRequest
+            request: reservationInfo
         });
     } catch (error) {
         console.error(error);

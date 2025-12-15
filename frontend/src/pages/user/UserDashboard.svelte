@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { fetchGet, fetchRequestJson } from "../../utils/fetch.js";
+    import { socket} from "../../utils/socket.js";
     import toastr from "toastr";
     import ConfirmDialog from "../../components/ConfirmDialog.svelte";
 
@@ -26,6 +27,21 @@
     }
 
     onMount(loadDashboard);
+
+    onMount(() => {
+        if (!socket.connected) {
+            socket.connect();
+        }
+
+        socket.on("new-loan-request", (data) => {
+            toastr.info(`Ny låneanmodning på "${data.item}"`);
+            loadDashboard(); // opdatér listen
+        });
+
+        return () => {
+            socket.off("new-loan-request");
+        };
+    });
 
     async function approveRequest(id) {
         const res = await fetchRequestJson(

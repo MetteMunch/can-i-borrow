@@ -1,6 +1,6 @@
 <script>
-    import { onMount } from "svelte";
-    import { fetchGet, fetchRequestJson } from "../../utils/fetch.js";
+    import {onMount} from "svelte";
+    import {fetchGet, fetchRequestJson} from "../../utils/fetch.js";
     import FullCalendar from 'svelte-fullcalendar';
     import dayGridPlugin from '@fullcalendar/daygrid';
     import interactionPlugin from '@fullcalendar/interaction';
@@ -20,29 +20,27 @@
     // ----------------------------------------------------
     async function loadData() {
 
-        try {
-            const itemData = await fetchGet(`http://localhost:8080/items/${params.id}`);
+        const itemData = await fetchGet(`http://localhost:8080/items/${params.id}`);
 
-            item = itemData.data;
-
-            console.log(item)
-
-            reservations = await fetchGet(
-                `http://localhost:8080/reservations/item/${params.id}`
-            );
-            console.log("Reservations: ", reservations)
-
-            convertReservationsToEvents();
-            options = {
-                ...options,
-                events: [...events]
-            };
-
-            console.log("events til kalenderen", events)
-
-        }  catch (err) {
-        alert("Du skal være logget ind for at se dette.");
+        if (!itemData?.data) {
+            return;
         }
+
+        item = itemData.data;
+
+        reservations = await fetchGet(
+            `http://localhost:8080/reservations/item/${params.id}`
+        );
+
+        console.log("reservations", reservations)
+
+        convertReservationsToEvents();
+        options = {
+            ...options,
+            events: [...events]
+        };
+
+        console.log("events til kalenderen", events)
 
     }
 
@@ -73,9 +71,6 @@
         // Fullcalender giver end som dagen efter det markerede område
         const realEnd = new Date(info.end);
         endDate = realEnd.toISOString().slice(0, 10);
-
-        console.log("Hvad er info end", info.end)
-        console.log("Valgt interval:", startDate, "→", endDate);
 
     }
 
@@ -115,7 +110,6 @@
     }
 
 
-
     // Kalender opsætning
     let options = {
         plugins: [dayGridPlugin, interactionPlugin],
@@ -142,14 +136,14 @@
 
     <!-- MIDTEN: BILLEDE -->
     <div class="item-box image-box">
-        <img src={item?.image_url} alt="Genstand" />
+        <img src={item?.image_url} alt="Genstand"/>
     </div>
 
     <!-- HØJRE: KALENDER -->
     <div class="item-box calendar-box">
 
 
-        <FullCalendar {options} />
+        <FullCalendar {options}/>
         <button class="request-btn"
                 onclick={sendRequest}>Send anmodning
         </button>
