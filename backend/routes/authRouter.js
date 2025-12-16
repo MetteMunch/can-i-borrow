@@ -12,7 +12,7 @@ router.post('/signup', async (req, res) => {
     return res.status(400).send({ message: 'Missing required fields' });
   }
 
-  //Jeg anvender db.get da jeg ved, at denne quiry vil maksimalt returnere en række
+  //Jeg anvender db.get da jeg ved, at denne quiry maksimalt vil returnere én række
   const checkExistingUser = await db.get('SELECT * FROM users WHERE username = ?;', username);
 
   if (checkExistingUser) {
@@ -63,7 +63,7 @@ router.get('/admindashboard', isAdmin, (req, res) => {
   res.send({ data: 'welcome to admin dashboard' });
 });
 
-// route til tjek af email udsendelse ved glemt passowrd (sker ikke virkelig ændring)
+// route til tjek af email udsendelse ved glemt password (sker ikke virkelig ændring)
 
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;

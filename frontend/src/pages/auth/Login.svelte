@@ -52,13 +52,11 @@
 
   <button type="button" onclick={login}>Login</button>
 
-  <p>
-    Ikke bruger endnu?
-    <a href="/signup" class="signup-button">Opret bruger</a>
-  </p>
+  <br><br>
+
 
   <p>
     Glemt password?
-    <a href="/forgot" class="signup-button">Klik her</a>
+    <a href="/forgot" class="button">Klik her</a>
   </p>
 </div>

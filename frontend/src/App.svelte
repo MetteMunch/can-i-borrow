@@ -107,7 +107,9 @@
     </Route>
 
     <Route path="/forgot">
+      <MainLayout>
       <ForgotPassword />
+      </MainLayout>
     </Route>
 
     <Route path="/reset-demo">
@@ -123,5 +125,6 @@
     <Route path="/item-create">
       <ProtectedRoute component={ItemCreate} layout={MainLayout} />
     </Route>
+
   </div>
 </Router>

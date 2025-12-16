@@ -78,7 +78,7 @@ if (insertDataMode) {
   await db.run(
     `
         INSERT INTO users (fullname, username, email, password, role, address, phone)
-        VALUES ('Fam. Munch', 'Tøl70-1', 'admin@mail.dk', ? , 'ADMIN', 'Tølløsevej 70, 1', 29840737);
+        VALUES ('Fam. Munch', 'Tøl70', 'admin@mail.dk', ? , 'ADMIN', 'Tølløsevej 70, 1', 29840737);
    `,
     adminpassword
   );
@@ -91,29 +91,6 @@ if (insertDataMode) {
     userpassword
   );
 
-  await db.run(
-    `
-        INSERT INTO users (fullname, username, email, password, role, address, phone)
-        VALUES ('Fru Larsen', 'Tøl57', 'alm@mail1.dk', ?, 'USER', 'Tølløsevej 57', 87654321);
-   `,
-    userpassword
-  );
-
-  await db.run(
-    `
-        INSERT INTO users (fullname, username, email, password, role, address, phone)
-        VALUES ('Hr Ahmed ', 'Tøl55', 'alm@mail2.dk', ?, 'USER', 'Tølløsevej 55', 52784519);
-   `,
-    userpassword
-  );
-
-  await db.run(
-    `
-        INSERT INTO users (fullname, username, email, password, role, address, phone)
-        VALUES ('Fru Brown ', 'Tøl56', 'alm@mail3.dk', ?, 'USER', 'Tølløsevej 56', 58974623);
-   `,
-    userpassword
-  );
 
   // await db.run(`
   //      INSERT INTO items (item, description, owner_id, image_url)
