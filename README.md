@@ -6,8 +6,8 @@ have en applikation, som gør det nemt at låne og udlåne diverse udstyr.
 ------------------------------------------------------------------------
 
 # Overordnet oversigt - Brugerens vej i appen
-![flowBillede.jpg](..%2F..%2FOneDrive%20-%20Erhvervsakademi%20K%C3%B8benhavn%2F4.semester%2FNode%2Feksamensprojekt%2Fimages%2FflowBillede.jpg)
 
+![Flowbillede](images_README/flowBillede.jpg)
 
 
 ------------------------------------------------------------------------
