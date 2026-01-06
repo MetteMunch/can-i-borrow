@@ -144,3 +144,5 @@ vite.config.ts.timestamp-*
 uploads/
 backend/uploads/
 
+# Database filer
+database.db
