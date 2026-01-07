@@ -25,6 +25,7 @@ router.get('/my-requests', isLoggedIn, async (req, res) => {
         WHERE reservations.requested_by = ? `,
     req.session.user.id
   );
+  console.log('Userid ifm at hente mine anmodninger:', req.session.user.id);
   res.send({ data: allMyRequests });
 });
 
@@ -38,6 +39,7 @@ router.get('/received', isLoggedIn, async (req, res) => {
         WHERE items.owner_id = ?`,
     req.session.user.id
   );
+  console.log('UserId ifm modtagne anmodninger:', req.session.user.id);
   res.send({ data: myReceivedRequestsAndReservations });
 });
 

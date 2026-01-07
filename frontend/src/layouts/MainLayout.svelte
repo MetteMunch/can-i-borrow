@@ -1,6 +1,6 @@
 <script>
   import { Link } from 'svelte-routing';
-  import { loggedIn, role } from '../stores/user.js';
+  import { loggedIn, role, user } from '../stores/user.js';
 </script>
 
 <div class="layout">
@@ -8,6 +8,12 @@
   <header class="header">
     <div class="logo">
       <img src="/logo.png" alt="EF logo" />
+    </div>
+
+    <div class="user-indicator">
+      {#if $loggedIn && $user}
+        Logget ind som <strong>{$user.username}</strong>
+      {/if}
     </div>
 
     <nav class="nav">
@@ -32,4 +38,5 @@
 
   <!-- FOOTER -->
   <footer class="footer">Fullstack Node.js Dec. 2025 - Mette Munch Hansen</footer>
+
 </div>

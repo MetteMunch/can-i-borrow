@@ -16,6 +16,7 @@ router.get('/my-items', isLoggedIn, async (req, res) => {
   res.send({
     data: allOfMyItems,
   });
+  console.log("userId fra hentning af mine items", req.session.user.id);
 });
 
 router.get('/:itemId', async (req, res) => {

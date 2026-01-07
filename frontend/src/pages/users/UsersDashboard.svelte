@@ -3,7 +3,7 @@
   import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import ConfirmDialog from '../../components/ConfirmDialog.svelte';
-  import { role } from '../../stores/user.js';
+  import { role, user } from '../../stores/user.js';
 
   import './Dashboard.css';
   import { navigate } from 'svelte-routing';
@@ -97,7 +97,9 @@
   }
 </script>
 
-<h1>Min side</h1>
+<h1>
+  Velkommen{#if $user}, {$user.username}{/if}
+</h1>
 
 <!-- ================== MODTAGNE ANMODNINGER OG UDLÅN ================== -->
 <section class="box">
