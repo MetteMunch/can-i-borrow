@@ -142,6 +142,7 @@ vite.config.ts.timestamp-*
 
 # Uploadede filer
 uploads/*
+!uploads/.gitkeep
 
 # Database filer
 database.db
