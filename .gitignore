@@ -140,9 +140,8 @@ vite.config.ts.timestamp-*
 
 .idea/
 
-# Uploaded files
-uploads/
-backend/uploads/
+# Uploadede filer
+uploads/*
 
 # Database filer
 database.db
