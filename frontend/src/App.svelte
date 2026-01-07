@@ -7,8 +7,7 @@
   import Login from './pages/auth/Login.svelte';
   import Signup from './pages/auth/Signup.svelte';
   import Home from './pages/home/Home.svelte';
-  import UserDashboard from './pages/user/UserDashboard.svelte';
-  import AdminDashboard from './pages/admin/AdminDashboard.svelte';
+  import UserDashboard from './pages/users/UsersDashboard.svelte';
   import 'toastr/build/toastr.min.css';
   import toastr from 'toastr';
   import ForgotPassword from './pages/auth/ForgotPassword.svelte';
@@ -98,12 +97,8 @@
       </MainLayout>
     </Route>
 
-    <Route path="/userdashboard">
-      <ProtectedRoute requiredRole="USER" component={UserDashboard} layout={MainLayout} />
-    </Route>
-
-    <Route path="/admindashboard">
-      <ProtectedRoute requiredRole="ADMIN" component={AdminDashboard} layout={MainLayout} />
+    <Route path="/dashboard">
+      <ProtectedRoute component={UserDashboard} layout={MainLayout} />
     </Route>
 
     <Route path="/forgot">

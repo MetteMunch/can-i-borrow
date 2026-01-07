@@ -3,6 +3,7 @@
   import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import ConfirmDialog from '../../components/ConfirmDialog.svelte';
+  import { role } from '../../stores/user.js';
 
   import './Dashboard.css';
   import { navigate } from 'svelte-routing';

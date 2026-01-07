@@ -13,9 +13,6 @@ export function goToMyPage() {
     return;
   }
 
-  if (userRole === 'ADMIN') {
-    navigate('/admindashboard');
-  } else {
-    navigate('/userdashboard');
-  }
+    navigate('/dashboard');
+
 }

@@ -16,6 +16,7 @@
       {:else}
         <Link to="/home">HOME</Link>
         <Link to="/logout">LOGOUT</Link>
+        <Link to="/dashboard">MIN SIDE</Link>
 
         {#if $role === 'ADMIN'}
           <Link to="/signup">OPRET BRUGER</Link>
