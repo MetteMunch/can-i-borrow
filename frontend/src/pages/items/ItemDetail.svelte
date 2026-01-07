@@ -5,6 +5,7 @@
   import dayGridPlugin from '@fullcalendar/daygrid';
   import interactionPlugin from '@fullcalendar/interaction';
   import toastr from 'toastr';
+  import { goBack} from '../../utils/navigation.js';
 
   import './ItemDetail.css';
 
@@ -133,5 +134,7 @@
   <div class="item-box calendar-box">
     <FullCalendar {options} />
     <button class="request-btn" onclick={sendRequest}>Send anmodning </button>
+    <button class="back-btn" onclick={() => goBack()}>Tilbage</button>
+
   </div>
 </div>

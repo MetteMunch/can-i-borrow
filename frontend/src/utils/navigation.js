@@ -12,7 +12,13 @@ export function goToMyPage() {
     navigate('/login');
     return;
   }
-
     navigate('/dashboard');
+}
 
+export function goBack(fallback = '/home') {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    navigate(fallback);
+  }
 }
