@@ -141,8 +141,8 @@ vite.config.ts.timestamp-*
 .idea/
 
 # Uploadede filer
-uploads/*
-!uploads/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
 
-# Database filer
-database.db
+# Database
+backend/database.db
