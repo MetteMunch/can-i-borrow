@@ -1,4 +1,4 @@
-/* ===== GLOBAL RESET ===== */
+/* ===== GLOBAL  ===== */
 :root {
   font-size: 150%;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -6,6 +6,12 @@
   line-height: 1.5;
   color: #213547;
   background-color: #ffffff;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
@@ -49,7 +55,8 @@ a:hover {
 .layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden; /* ← forhindrer body-scroll */
   background-color: #d9e8d1; /* lys grøn baggrund */
 }
 
@@ -65,8 +72,8 @@ a:hover {
 .user-indicator {
   flex: 1;
   text-align: center;
-  font-size: 14px;
-  color: #444;
+  font-size: 24px;
+  color: #e3e348;
 }
 
 .logo {
@@ -101,6 +108,7 @@ a:hover {
   flex: 1;
   padding: 40px;
   display: block; /* <- VIGTIG: gør så dashboard og sider vises korrekt */
+  overflow-y: auto;
 }
 
 /* ===== FOOTER ===== */
@@ -183,3 +191,5 @@ a:hover {
   text-decoration: underline;
   cursor: pointer;
 }
+
+
