@@ -61,4 +61,75 @@ router.post('/', isLoggedIn, async (req, res) => {
   }
 });
 
+router.put('/:itemId', isLoggedIn, async (req, res) => {
+  const { item, description, image_url } = req.body;
+  const itemId = req.params.itemId;
+  const userId = req.session.user.id;
+
+  // tjek at item findes og at du ejer det
+  const existing = await db.get('SELECT * FROM items WHERE id = ?', itemId);
+
+  if (!existing) {
+    return res.status(404).send({ message: 'Item findes ikke' });
+  }
+
+  if (existing.owner_id !== userId) {
+    return res.status(403).send({ message: 'Du har ikke rettighed til at redigere denne genstand' });
+  }
+
+  // behold eksisterende værdier hvis noget mangler
+  const newItem = item?.trim() ?? existing.item;
+  const newDesc = description?.trim() ?? existing.description;
+  const newImage = image_url?.trim() ?? existing.image_url;
+
+  await db.run(
+    `
+      UPDATE items
+      SET item = ?, description = ?, image_url = ?
+      WHERE id = ?
+    `,
+    newItem,
+    newDesc,
+    newImage,
+    itemId
+  );
+
+  const updated = await db.get('SELECT * FROM items WHERE id = ?', itemId);
+
+  res.send({ message: 'Item opdateret', data: updated });
+});
+
+router.delete('/:itemId', isLoggedIn, async (req, res) => {
+  const itemId = req.params.itemId;
+  const userId = req.session.user.id;
+
+  const existing = await db.get('SELECT * FROM items WHERE id = ?', itemId);
+
+  if (!existing) {
+    return res.status(404).send({ message: 'Item findes ikke' });
+  }
+
+  if (existing.owner_id !== userId) {
+    return res.status(403).send({ message: 'Du har ikke rettighed til at slette denne genstand' });
+  }
+
+  // (valgfrit men anbefalet) blokér sletning hvis der findes reservationer
+  const hasReservations = await db.get(
+    'SELECT 1 FROM reservations WHERE item_id = ? LIMIT 1',
+    itemId
+  );
+
+  if (hasReservations) {
+    return res.status(400).send({
+      message: 'Genstanden kan ikke slettes, fordi der findes reservationer/anmodninger på den.',
+    });
+  }
+
+  await db.run('DELETE FROM items WHERE id = ?', itemId);
+
+  res.send({ message: 'Item slettet' });
+});
+
+
+
 export default router;
