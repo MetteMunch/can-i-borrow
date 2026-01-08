@@ -5,7 +5,8 @@
   import dayGridPlugin from '@fullcalendar/daygrid';
   import interactionPlugin from '@fullcalendar/interaction';
   import toastr from 'toastr';
-  import { goBack} from '../../utils/navigation.js';
+  import { goBack } from '../../utils/navigation.js';
+  import { user } from '../../stores/user.js'
 
   import './ItemDetail.css';
 
@@ -16,6 +17,11 @@
   let events = [];
   let startDate = null;
   let endDate = null;
+
+  // reaktiv variabel
+  $: isOwner = item && $user && item.owner_id === $user.id;
+  $: console.log('isOwner:', isOwner, 'item.owner_id:', item?.owner_id, 'user.id:', $user?.id);
+
 
   // ----------------------------------------------------
   // HENTER DATA FRA BACKEND
@@ -102,6 +108,40 @@
     await loadData();
   }
 
+  // ----------------------------------------------------
+  // EJER BLOKERER DATOER
+  //----------------------------------------------------
+
+  async function blockDates() {
+    if (!startDate || !endDate) {
+      toastr.error('Vælg start og slut dato');
+      return;
+    }
+
+    const block = await fetchRequestJson(
+      'http://localhost:8080/reservations/block',
+      {
+        item_id: params.id,
+        start_date: startDate,
+        end_date: endDate,
+      },
+      'POST'
+    );
+
+
+    if (!block.ok) {
+      toastr.error('Kunne ikke blokere perioden');
+      return;
+    }
+
+    toastr.success('Periode blokeret');
+    startDate = null;
+    endDate = null;
+
+    await loadData();
+  }
+
+
   // Kalender opsætning
   let options = {
     plugins: [dayGridPlugin, interactionPlugin],
@@ -110,6 +150,7 @@
     selectMirror: true,
     events,
     select: handleSelect,
+    selectOverlap: false,
   };
 </script>
 
@@ -133,7 +174,15 @@
   <!-- HØJRE: KALENDER -->
   <div class="item-box calendar-box">
     <FullCalendar {options} />
-    <button class="request-btn" onclick={sendRequest}>Send anmodning </button>
+    {#if isOwner}
+      <button class="request-btn" onclick={blockDates}>
+        Blokér periode
+      </button>
+    {:else}
+      <button class="request-btn" onclick={sendRequest}>
+        Send anmodning
+      </button>
+    {/if}
     <button class="back-btn" onclick={() => goBack()}>Tilbage</button>
 
   </div>
