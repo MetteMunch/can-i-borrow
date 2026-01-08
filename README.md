@@ -92,9 +92,9 @@ http://localhost:5173/
 
 # Udeståender pr. 16.12.25, som jeg gerne vil nå at indarbejde inden eksamen
 
-- Opsætning af filserver Hetzner S3 - Object Storage (billeder) i stedet for at gemme lokalt.
-- Redigeringsmuligheder på allerede oprettede genstande.
-- Lave ét Dashboard, som styres med role i stedet for meget redundant kode som nu. ![check](images_README/check.png)
-- Samle API-url ét sted. ![check](images_README/check.png)
+- [ ] Opsætning af filserver Hetzner S3 - Object Storage (billeder) i stedet for at gemme lokalt.
+- [ ] Redigeringsmuligheder på allerede oprettede genstande.
+- [x] Lave ét Dashboard, som styres med role i stedet for meget redundant kode som nu. 
+- [x] Samle API-url ét sted. 
 
 ------------------------------------------------------------------------
