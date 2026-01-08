@@ -2,6 +2,7 @@
   import { navigate } from 'svelte-routing';
   import { fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
+  import { API_URL } from '../../utils/api.js';
 
   let fullname = '';
   let username = '';
@@ -11,7 +12,7 @@
   let address = '';
   let phone = '';
 
-  const url = 'http://localhost:8080/auth/signup';
+  const url = `${API_URL}/auth/signup`;
 
   async function signup() {
     if (password !== confirm) {

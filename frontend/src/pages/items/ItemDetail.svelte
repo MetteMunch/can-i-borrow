@@ -7,7 +7,7 @@
   import toastr from 'toastr';
   import { goBack } from '../../utils/navigation.js';
   import { user } from '../../stores/user.js'
-
+  import { API_URL } from '../../utils/api.js';
   import './ItemDetail.css';
 
   export let params; // /items/:id
@@ -27,7 +27,7 @@
   // HENTER DATA FRA BACKEND
   // ----------------------------------------------------
   async function loadData() {
-    const itemData = await fetchGet(`http://localhost:8080/items/${params.id}`);
+    const itemData = await fetchGet(`${API_URL}/items/${params.id}`);
 
     if (!itemData?.data) {
       return;
@@ -35,7 +35,7 @@
 
     item = itemData.data;
 
-    reservations = await fetchGet(`http://localhost:8080/reservations/item/${params.id}`);
+    reservations = await fetchGet(`${API_URL}/reservations/item/${params.id}`);
 
     console.log('reservations', reservations);
 
@@ -87,7 +87,7 @@
     }
 
     const res = await fetchRequestJson(
-      'http://localhost:8080/reservations/request',
+      `${API_URL}/reservations/request`,
       {
         item_id: params.id,
         start_date: startDate,
@@ -119,7 +119,7 @@
     }
 
     const block = await fetchRequestJson(
-      'http://localhost:8080/reservations/block',
+      `${API_URL}/reservations/block`,
       {
         item_id: params.id,
         start_date: startDate,

@@ -2,10 +2,10 @@
   import { user, loggedIn, role } from '../../stores/user.js';
   import { navigate } from 'svelte-routing';
   import { socket } from '../../utils/socket.js';
-
+  import { API_URL } from '../../utils/api.js';
   import { fetchRequestJson } from '../../utils/fetch.js';
 
-  let url = 'http://localhost:8080/session/logout';
+  let url = `${API_URL}/session/logout`;
 
   async function logout() {
     console.log('Her er jeg i logout');
