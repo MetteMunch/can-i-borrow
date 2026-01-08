@@ -2,10 +2,11 @@ import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../db/db.js';
 import { sendResetEmail } from '../utils/email.js';
+import { isLoggedIn, isAdmin } from '../middleware/auth.js';
 
 const router = Router();
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', isAdmin, async (req, res) => {
   const { fullname, username, email, password, address, phone } = req.body;
 
   if (!fullname || !username || !email || !password || !address || !phone) {
@@ -53,14 +54,8 @@ router.post('/login', async (req, res) => {
   res.send({ message: 'Logged in successfully', user: req.session.user });
 });
 
-import { isLoggedIn, isAdmin } from '../middleware/auth.js';
-
 router.get('/secret', isLoggedIn, (req, res) => {
   res.send({ data: 'You are logged in and can use this secret path' });
-});
-
-router.get('/admindashboard', isAdmin, (req, res) => {
-  res.send({ data: 'welcome to admin dashboard' });
 });
 
 // route til tjek af email udsendelse ved glemt password (sker ikke virkelig ændring)

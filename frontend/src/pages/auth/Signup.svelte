@@ -3,6 +3,7 @@
   import { fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import { API_URL } from '../../utils/api.js';
+  import { role } from '../../stores/user.js';
 
   let fullname = '';
   let username = '';
@@ -13,6 +14,11 @@
   let phone = '';
 
   const url = `${API_URL}/auth/signup`;
+
+  $: if ($role !== 'ADMIN') {
+    toastr.error('Kun administratorer kan oprette brugere');
+    navigate('/home');
+  }
 
   async function signup() {
     if (password !== confirm) {
