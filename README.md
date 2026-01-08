@@ -94,7 +94,7 @@ http://localhost:5173/
 
 - Opsætning af filserver Hetzner S3 - Object Storage (billeder) i stedet for at gemme lokalt.
 - Redigeringsmuligheder på allerede oprettede genstande.
-- Lave ét Dashboard, som styres med role i stedet for meget redundant kode som nu. ![check.png](..%2F..%2FOneDrive%20-%20Erhvervsakademi%20K%C3%B8benhavn%2F4.semester%2FNode%2Feksamensprojekt%2Fimages%2Fcheck.png)
-- Samle API-url ét sted. ![check.png](..%2F..%2FOneDrive%20-%20Erhvervsakademi%20K%C3%B8benhavn%2F4.semester%2FNode%2Feksamensprojekt%2Fimages%2Fcheck.png)
+- Lave ét Dashboard, som styres med role i stedet for meget redundant kode som nu. ![check](images_README/check.png)
+- Samle API-url ét sted. ![check](images_README/check.png)
 
 ------------------------------------------------------------------------
