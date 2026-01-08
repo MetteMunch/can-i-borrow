@@ -95,6 +95,31 @@
   function goToItemDetails(id) {
     navigate(`/item-details/${id}`);
   }
+
+  function goToEditItem(id) {
+    navigate(`/item-edit/${id}`);
+  }
+
+  async function deleteItem(id) {
+    const res = await fetchRequestJson(`http://localhost:8080/items/${id}`, {}, 'DELETE');
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      toastr.error(data.message || 'Kunne ikke slette genstand');
+      return;
+    }
+
+    toastr.success('Genstand slettet');
+    loadDashboard();
+  }
+
+  function confirmDeleteItem(id) {
+    confirmMessage = 'Vil du slette denne genstand?';
+    confirmActionFn = () => deleteItem(id);
+    showConfirm = true;
+  }
+
 </script>
 
 <h1>
@@ -188,6 +213,8 @@
           <th>Beskrivelse</th>
           <th>Oprettet</th>
           <th>Vis</th>
+          <th>Rediger</th>
+          <th>Slet</th>
         </tr>
       </thead>
 
@@ -198,6 +225,8 @@
             <td>{i.description}</td>
             <td>{i.created_at}</td>
             <td class="link" onclick={() => goToItemDetails(i.id)}>Vis</td>
+            <td class="link" onclick={() => goToEditItem(i.id)}>Rediger</td>
+            <td><button class="icon-btn delete" onclick={() => confirmDeleteItem(i.id)}> 🗑 </button></td>
           </tr>
         {/each}
       </tbody>

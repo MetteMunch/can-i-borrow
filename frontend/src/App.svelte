@@ -14,9 +14,11 @@
   import ResetDemo from './pages/auth/ResetPasswordDemo.svelte';
   import ItemDetail from './pages/items/ItemDetail.svelte';
   import ItemCreate from './pages/items/ItemCreate.svelte';
+  import ItemEdit from './pages/items/ItemEdit.svelte';
   import Logout from './pages/auth/Logout.svelte';
   import { onMount } from 'svelte';
   import { socket } from './utils/socket.js';
+  import { API_URL} from './utils/api.js';
 
   toastr.options = {
     closeButton: true,
@@ -29,7 +31,7 @@
 
   //Denne kører når appen starter / loader eller ved refresh
   //Hvis ikke vi har den her, så vil brugeren blive smidt ud ved hver refresh
-  fetchGet('http://localhost:8080/session/me').then((data) => {
+  fetchGet(`${API_URL}/session/me`).then((data) => {
     if (data.loggedIn) {
       user.set(data.user);
       loggedIn.set(true);
@@ -120,6 +122,11 @@
     <Route path="/item-create">
       <ProtectedRoute component={ItemCreate} layout={MainLayout} />
     </Route>
+
+    <Route path="/item-edit/:id" let:params>
+      <ProtectedRoute component={ItemEdit} layout={MainLayout} {params} />
+    </Route>
+
 
   </div>
 </Router>
