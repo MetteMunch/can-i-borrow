@@ -3,8 +3,8 @@
   import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import ConfirmDialog from '../../components/ConfirmDialog.svelte';
-  import { role, user } from '../../stores/user.js';
-
+  import { user } from '../../stores/user.js';
+  import { API_URL } from '../../utils/api.js';
   import './Dashboard.css';
   import { navigate } from 'svelte-routing';
 
@@ -17,9 +17,9 @@
   let myReceivedRequests = [];
 
   async function loadDashboard() {
-    const req = await fetchGet('http://localhost:8080/reservations/my-requests');
-    const items = await fetchGet('http://localhost:8080/items/my-items');
-    const receivedReq = await fetchGet('http://localhost:8080/reservations/received');
+    const req = await fetchGet(`${API_URL}/reservations/my-requests`);
+    const items = await fetchGet(`${API_URL}/items/my-items`);
+    const receivedReq = await fetchGet(`${API_URL}/reservations/received`);
 
     myRequests = req?.data || [];
     myItems = items?.data || [];
@@ -30,7 +30,7 @@
 
   async function approveRequest(id) {
     const res = await fetchRequestJson(
-      `http://localhost:8080/reservations/${id}/approve`,
+      `${API_URL}/reservations/${id}/approve`,
       {},
       'PUT'
     );
@@ -45,7 +45,7 @@
   }
 
   async function declineRequest(id) {
-    const res = await fetchRequestJson(`http://localhost:8080/reservations/${id}`, {}, 'DELETE');
+    const res = await fetchRequestJson(`${API_URL}/reservations/${id}`, {}, 'DELETE');
 
     if (!res.ok) {
       toastr.error('fejl ifm afvisning af anmodning');
@@ -57,7 +57,7 @@
   }
 
   async function deleteLoan(id) {
-    const res = await fetchRequestJson(`http://localhost:8080/reservations/${id}`, {}, 'DELETE');
+    const res = await fetchRequestJson(`${API_URL}/reservations/${id}`, {}, 'DELETE');
 
     if (!res.ok) {
       toastr.error('fejl ifm sletning af aftalt udlån');

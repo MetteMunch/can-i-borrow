@@ -4,11 +4,12 @@
   import { navigate } from 'svelte-routing';
   import toastr from 'toastr';
   import { socket } from '../../utils/socket.js';
+  import { API_URL } from '../../utils/api.js';
 
   let username = '';
   let password = '';
 
-  let url = 'http://localhost:8080/auth/login';
+  let url = `${API_URL}/auth/login`;
 
   async function login() {
     const body = { username, password };

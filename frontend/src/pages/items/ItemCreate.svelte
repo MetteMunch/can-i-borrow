@@ -2,7 +2,7 @@
   import { fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import { goToMyPage } from '../../utils/navigation.js';
-
+  import { API_URL } from '../../utils/api.js';
   import './ItemCreate.css';
 
   let item = '';
@@ -23,7 +23,7 @@
     const formData = new FormData();
     formData.append('image', file);
 
-    const response = await fetch('http://localhost:8080/uploads/upload', {
+    const response = await fetch(`${API_URL}/uploads/upload`, {
       method: 'POST',
       body: formData,
       credentials: 'include',
@@ -48,7 +48,7 @@
     }
 
     const res = await fetchRequestJson(
-      'http://localhost:8080/items',
+      `${API_URL}/items`,
       { item, description, image_url },
       'POST'
     );
