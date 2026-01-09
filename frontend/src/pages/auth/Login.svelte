@@ -23,7 +23,7 @@
     }
 
     //session check fra backend
-    const sessionData = await fetchGet('http://localhost:8080/session/me');
+    const sessionData = await fetchGet(`${API_URL}/session/me`);
 
     if (!sessionData.loggedIn) {
       toastr.error('Kunne ikke logge ind – prøv igen');
@@ -45,14 +45,15 @@
 <div class="login-signup-box">
   <h1>Login</h1>
 
-  <label for="username">Brugernavn</label>
-  <input id="username" bind:value={username} />
+  <form on:submit|preventDefault={login}>
+    <label for="username">Brugernavn</label>
+    <input id="username" bind:value={username} autofocus />
 
-  <label for="password">Password</label>
-  <input id="password" type="password" bind:value={password} />
+    <label for="password">Password</label>
+    <input id="password" type="password" bind:value={password} />
 
-  <button type="button" onclick={login}>Login</button>
-
+    <button type="submit">Login</button>
+  </form>
   <br><br>
 
 
