@@ -43,18 +43,34 @@
     }
   }
 
-  async function uploadImage() {
-    const formData = new FormData();
-    formData.append('image', file);
+  // Hent presigned URL fra backend og upload billede til Hetzner
+  async function getPresignedUrl(filename) {
+    const res = await fetchGet(`${API_URL}/files/upload-url/${filename}`);
 
-    const response = await fetch(`${API_URL}/uploads/upload`, {
-      method: 'POST',
-      body: formData,
-      credentials: 'include',
+    if (!res?.url) {
+      throw new Error('Kunne ikke hente upload URL');
+    }
+
+    return res.url;
+  }
+
+  async function uploadImageToHetzner(file) {
+    const filename = `${Date.now()}-${file.name}`;
+
+    // 1️⃣ hent presigned URL
+    const uploadUrl = await getPresignedUrl(filename);
+
+    // 2️⃣ upload direkte til Hetzner
+    await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
     });
 
-    const data = await response.json();
-    return data.url;
+    // 3️⃣ returnér den offentlige URL
+    return `${import.meta.env.VITE_HETZNER_PUBLIC_URL}/${filename}`;
   }
 
   async function save() {
@@ -66,7 +82,7 @@
     let finalImageUrl = image_url;
 
     if (file) {
-      finalImageUrl = await uploadImage();
+      finalImageUrl = await uploadImageToHetzner(file);
     }
 
     const editedItem = await fetchRequestJson(`${API_URL}/items/${params.id}`,

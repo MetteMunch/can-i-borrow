@@ -21,6 +21,7 @@
   // reaktiv variabel
   $: isOwner = item && $user && item.owner_id === $user.id;
   $: console.log('isOwner:', isOwner, 'item.owner_id:', item?.owner_id, 'user.id:', $user?.id);
+  $: console.log('image_url:', item?.image_url);
 
 
   // ----------------------------------------------------

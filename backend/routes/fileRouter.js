@@ -6,7 +6,9 @@ const router = Router();
 
 router.get('/upload-url/:filename', isLoggedIn, async (req, res) => {
   try {
-    const url = await getUploadUrl(req.params.filename);
+    const filename = req.params.filename;
+    const url = await getUploadUrl(filename);
+
     res.send({ url });
   } catch (error) {
     console.error(error);
