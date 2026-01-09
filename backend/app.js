@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
   const userId = session.user.id;
   console.log('Socket connected for user', userId);
 
-  // 👇 vigtigt
+  // vigtigt
   socket.join(`user-${userId}`);
 
   socket.on('disconnect', () => {
@@ -74,10 +74,6 @@ app.set('io', io);
 
 import fileRouter from './routes/fileRouter.js';
 app.use('/files', fileRouter);
-
-import uploadRouter from './routes/localFileRouter.js';
-app.use('/uploads', uploadRouter);
-app.use('/uploads', express.static('uploads'));
 
 app.get('/test', (req, res) => {
   res.send({ data: 'Der er hul igennem til test' });

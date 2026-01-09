@@ -1,5 +1,5 @@
 <script>
-  import { fetchRequestJson } from '../../utils/fetch.js';
+  import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import { goToMyPage } from '../../utils/navigation.js';
   import { API_URL } from '../../utils/api.js';
@@ -10,6 +10,9 @@
   let file = null;
   let preview = null;
 
+  console.log("fra env", import.meta.env.VITE_HETZNER_PUBLIC_URL);
+
+
   // Sætter preview
   function handleFile(e) {
     file = e.target.files[0];
@@ -18,21 +21,37 @@
     }
   }
 
-  // Upload billede til backend
-  async function uploadImage() {
-    const formData = new FormData();
-    formData.append('image', file);
+  // Hent presigned URL fra backend og upload billede til Hetzner
+  async function getPresignedUrl(filename) {
+    const res = await fetchGet(`${API_URL}/files/upload-url/${filename}`);
 
-    const response = await fetch(`${API_URL}/uploads/upload`, {
-      method: 'POST',
-      body: formData,
-      credentials: 'include',
+    if (!res?.url) {
+      toastr.error('Kunne ikke hente upload URL');
+    }
+
+    return res.url;
+  }
+
+  async function uploadImageToHetzner(file) {
+    const filename = `${Date.now()}-${file.name}`;
+
+    // 1️⃣ hent presigned URL
+    const uploadUrl = await getPresignedUrl(filename);
+
+    // 2️⃣ upload direkte til Hetzner
+    await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
     });
 
-    const data = await response.json();
-    console.log('URL fra backend i ItemCreate', data.url);
-    return data.url; // backend returnerer URL
+    // 3️⃣ returnér den offentlige URL
+    return `${import.meta.env.VITE_HETZNER_PUBLIC_URL}/${filename}`;
   }
+
+
 
   // Opretter item i backend
   async function createItem() {
@@ -44,7 +63,7 @@
     let image_url = '/default.png';
 
     if (file) {
-      image_url = await uploadImage();
+      image_url = await uploadImageToHetzner(file);
     }
 
     const res = await fetchRequestJson(
