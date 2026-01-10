@@ -26,6 +26,10 @@
     myReceivedRequests = receivedReq?.data || [];
   }
 
+  $: visibleMyRequest = myRequests.filter(
+    (r) => r.status !== 'BLOCKED'
+  );
+
   onMount(loadDashboard);
 
   async function approveRequest(id) {
@@ -128,7 +132,7 @@
 
 <!-- ================== MODTAGNE ANMODNINGER OG UDLÅN ================== -->
 <section class="box">
-  <h2>Anmodninger modtaget og aftalte udlån</h2>
+  <h2>Anmodninger modtaget, aftalte udlån og blokerede perioder</h2>
 
   {#if myReceivedRequests.length === 0}
     <p>Du har ikke modtaget anmodninger eller har aftalt nogle udlån.</p>
@@ -172,7 +176,7 @@
 <section class="box">
   <h2>Mine afsendte anmodninger og lån</h2>
 
-  {#if myRequests.length === 0}
+  {#if visibleMyRequest.length === 0}
     <p>Du har ingen anmodninger.</p>
   {:else}
     <table>
@@ -186,7 +190,7 @@
       </thead>
 
       <tbody>
-        {#each myRequests as r}
+        {#each visibleMyRequest as r}
           <tr>
             <td>{r.item}</td>
             <td>{r.start_date} → {r.end_date}</td>
