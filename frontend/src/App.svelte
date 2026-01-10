@@ -1,7 +1,7 @@
 <script>
   import MainLayout from './layouts/MainLayout.svelte';
   import ProtectedRoute from './components/ProtectedRoute.svelte';
-  import { Router, Link, Route } from 'svelte-routing';
+  import { Router, Route } from 'svelte-routing';
   import { fetchGet } from './utils/fetch.js';
   import { user, loggedIn, role } from './stores/user.js';
   import Login from './pages/auth/Login.svelte';
@@ -29,21 +29,23 @@
     hideMethod: 'fadeOut',
   };
 
-  //Denne kører når appen starter / loader eller ved refresh
-  //Hvis ikke vi har den her, så vil brugeren blive smidt ud ved hver refresh
-  fetchGet(`${API_URL}/session/me`).then((data) => {
-    if (data.loggedIn) {
-      user.set(data.user);
-      loggedIn.set(true);
-      role.set(data.user.role);
-    } else {
-      user.set(null);
-      loggedIn.set(false);
-      role.set(null);
-    }
-  });
 
   onMount(() => {
+
+    //Sessions check - hvis ikke vi har denne tjek så vil brugeren blive smidt ud ved hver refresh
+    fetchGet(`${API_URL}/session/me`).then((data) => {
+      if (data.loggedIn) {
+        user.set(data.user);
+        loggedIn.set(true);
+        role.set(data.user.role);
+      } else {
+        user.set(null);
+        loggedIn.set(false);
+        role.set(null);
+      }
+    });
+
+    //Socket listeners
     const unsubscribe = loggedIn.subscribe((isLoggedIn) => {
       if (isLoggedIn && !socket.connected) {
         socket.connect();
@@ -126,7 +128,6 @@
     <Route path="/item-edit/:id" let:params>
       <ProtectedRoute component={ItemEdit} layout={MainLayout} {params} />
     </Route>
-
 
   </div>
 </Router>
