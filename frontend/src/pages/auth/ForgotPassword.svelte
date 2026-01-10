@@ -1,7 +1,7 @@
 <script>
   import { fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
-  import { API_URL} from '../../utils/api.js';
+  import { API_URL } from '../../utils/api.js';
 
   let email = '';
 

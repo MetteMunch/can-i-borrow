@@ -5,6 +5,20 @@
   gap: 2rem;
 }
 
+/* Tablet / split screen */
+@media (max-width: 1200px) {
+  .item-detail-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobil / meget smal */
+@media (max-width: 800px) {
+  .item-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* FÆLLES BOKS-STYLING */
 .item-box {
   background: white;
@@ -43,7 +57,8 @@
   position: relative;
 }
 
-.request-btn, .back-btn {
+.request-btn,
+.back-btn {
   background: #4caf50;
   color: white;
   border: none;
@@ -53,7 +68,8 @@
   margin-bottom: 12px;
   font-size: 16px;
 }
-.request-btn:hover, .back-btn:hover {
+.request-btn:hover,
+.back-btn:hover {
   background: #3c8a3f;
 }
 
@@ -129,4 +145,3 @@
   border-color: #777;
   opacity: 0.8;
 }
-

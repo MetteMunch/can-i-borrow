@@ -26,18 +26,12 @@
     myReceivedRequests = receivedReq?.data || [];
   }
 
-  $: visibleMyRequest = myRequests.filter(
-    (r) => r.status !== 'BLOCKED'
-  );
+  $: visibleMyRequest = myRequests.filter((r) => r.status !== 'BLOCKED');
 
   onMount(loadDashboard);
 
   async function approveRequest(id) {
-    const res = await fetchRequestJson(
-      `${API_URL}/reservations/${id}/approve`,
-      {},
-      'PUT'
-    );
+    const res = await fetchRequestJson(`${API_URL}/reservations/${id}/approve`, {}, 'PUT');
 
     if (!res.ok) {
       toastr.error('Kunne ikke godkende anmodning');
@@ -123,7 +117,6 @@
     confirmActionFn = () => deleteItem(id);
     showConfirm = true;
   }
-
 </script>
 
 <h1>
@@ -230,7 +223,11 @@
             <td>{i.created_at}</td>
             <td class="link" onclick={() => goToItemDetails(i.id)}>Vis</td>
             <td class="link" onclick={() => goToEditItem(i.id)}>Rediger</td>
-            <td><button class="icon-btn delete" onclick={() => confirmDeleteItem(i.id)}> 🗑 </button></td>
+            <td
+              ><button class="icon-btn delete" onclick={() => confirmDeleteItem(i.id)}>
+                🗑
+              </button></td
+            >
           </tr>
         {/each}
       </tbody>

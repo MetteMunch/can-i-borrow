@@ -16,7 +16,7 @@ router.get('/my-items', isLoggedIn, async (req, res) => {
   res.send({
     data: allOfMyItems,
   });
-  console.log("userId fra hentning af mine items", req.session.user.id);
+  console.log('userId fra hentning af mine items', req.session.user.id);
 });
 
 router.get('/:itemId', async (req, res) => {
@@ -74,7 +74,9 @@ router.put('/:itemId', isLoggedIn, async (req, res) => {
   }
 
   if (existing.owner_id !== userId) {
-    return res.status(403).send({ message: 'Du har ikke rettighed til at redigere denne genstand' });
+    return res
+      .status(403)
+      .send({ message: 'Du har ikke rettighed til at redigere denne genstand' });
   }
 
   // behold eksisterende værdier hvis noget mangler
@@ -129,7 +131,5 @@ router.delete('/:itemId', isLoggedIn, async (req, res) => {
 
   res.send({ message: 'Item slettet' });
 });
-
-
 
 export default router;

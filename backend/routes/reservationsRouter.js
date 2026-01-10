@@ -114,10 +114,7 @@ router.post('/block', isLoggedIn, async (req, res) => {
   const { item_id, start_date, end_date } = req.body;
 
   // Tjek ejerskab
-  const item = await db.get(
-    'SELECT owner_id FROM items WHERE id = ?',
-    item_id
-  );
+  const item = await db.get('SELECT owner_id FROM items WHERE id = ?', item_id);
 
   if (!item || item.owner_id !== req.session.user.id) {
     return res.status(403).send({ message: 'Du ejer ikke dette item' });
@@ -136,7 +133,6 @@ router.post('/block', isLoggedIn, async (req, res) => {
 
   res.status(201).send({ message: 'Periode blokeret' });
 });
-
 
 router.delete('/:reservationId', isLoggedIn, async (req, res) => {
   const reservationInfo = await db.get(

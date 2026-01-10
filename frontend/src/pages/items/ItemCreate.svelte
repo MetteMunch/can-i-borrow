@@ -10,8 +10,7 @@
   let file = null;
   let preview = null;
 
-  console.log("fra env", import.meta.env.VITE_HETZNER_PUBLIC_URL);
-
+  console.log('fra env', import.meta.env.VITE_HETZNER_PUBLIC_URL);
 
   // Sætter preview
   function handleFile(e) {
@@ -50,8 +49,6 @@
     // 3️⃣ returnér den offentlige URL
     return `${import.meta.env.VITE_HETZNER_PUBLIC_URL}/${filename}`;
   }
-
-
 
   // Opretter item i backend
   async function createItem() {

@@ -3,7 +3,7 @@
   import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import { goBack } from '../../utils/navigation.js';
-  import { API_URL} from '../../utils/api.js';
+  import { API_URL } from '../../utils/api.js';
   import { user } from '../../stores/user.js';
   import { navigate } from 'svelte-routing';
 
@@ -85,7 +85,8 @@
       finalImageUrl = await uploadImageToHetzner(file);
     }
 
-    const editedItem = await fetchRequestJson(`${API_URL}/items/${params.id}`,
+    const editedItem = await fetchRequestJson(
+      `${API_URL}/items/${params.id}`,
       { item: itemName, description, image_url: finalImageUrl },
       'PUT'
     );
@@ -108,10 +109,10 @@
   <label for="item">Navn</label>
   <input id="item" type="text" bind:value={itemName} />
 
-  <label for="description" >Beskrivelse</label>
+  <label for="description">Beskrivelse</label>
   <textarea id="description" bind:value={description}></textarea>
 
-  <label for="image" >Billede</label>
+  <label for="image">Billede</label>
   <input id="image" type="file" accept="image/*" onchange={handleFile} />
 
   {#if preview}
