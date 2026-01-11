@@ -18,7 +18,7 @@
   import Logout from './pages/auth/Logout.svelte';
   import { onMount } from 'svelte';
   import { socket } from './utils/socket.js';
-  import { API_URL} from './utils/api.js';
+  import { API_URL } from './utils/api.js';
 
   toastr.options = {
     closeButton: true,
@@ -29,9 +29,7 @@
     hideMethod: 'fadeOut',
   };
 
-
   onMount(() => {
-
     //Sessions check - hvis ikke vi har denne tjek så vil brugeren blive smidt ud ved hver refresh
     fetchGet(`${API_URL}/session/me`).then((data) => {
       if (data.loggedIn) {
@@ -107,7 +105,7 @@
 
     <Route path="/forgot">
       <MainLayout>
-      <ForgotPassword />
+        <ForgotPassword />
       </MainLayout>
     </Route>
 
@@ -128,6 +126,5 @@
     <Route path="/item-edit/:id" let:params>
       <ProtectedRoute component={ItemEdit} layout={MainLayout} {params} />
     </Route>
-
   </div>
 </Router>

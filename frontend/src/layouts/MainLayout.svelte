@@ -38,5 +38,4 @@
 
   <!-- FOOTER -->
   <footer class="footer">Fullstack Node.js Dec. 2025 - Mette Munch Hansen</footer>
-
 </div>

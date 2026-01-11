@@ -6,7 +6,7 @@
   import interactionPlugin from '@fullcalendar/interaction';
   import toastr from 'toastr';
   import { goBack } from '../../utils/navigation.js';
-  import { user } from '../../stores/user.js'
+  import { user } from '../../stores/user.js';
   import { API_URL } from '../../utils/api.js';
   import './ItemDetail.css';
 
@@ -22,7 +22,6 @@
   $: isOwner = item && $user && item.owner_id === $user.id;
   $: console.log('isOwner:', isOwner, 'item.owner_id:', item?.owner_id, 'user.id:', $user?.id);
   $: console.log('image_url:', item?.image_url);
-
 
   // ----------------------------------------------------
   // HENTER DATA FRA BACKEND
@@ -129,7 +128,6 @@
       'POST'
     );
 
-
     if (!block.ok) {
       toastr.error('Kunne ikke blokere perioden');
       return;
@@ -141,7 +139,6 @@
 
     await loadData();
   }
-
 
   // Kalender opsætning
   let options = {
@@ -176,15 +173,10 @@
   <div class="item-box calendar-box">
     <FullCalendar {options} />
     {#if isOwner}
-      <button class="request-btn" onclick={blockDates}>
-        Blokér periode
-      </button>
+      <button class="request-btn" onclick={blockDates}> Blokér periode </button>
     {:else}
-      <button class="request-btn" onclick={sendRequest}>
-        Send anmodning
-      </button>
+      <button class="request-btn" onclick={sendRequest}> Send anmodning </button>
     {/if}
     <button class="back-btn" onclick={() => goBack()}>Tilbage</button>
-
   </div>
 </div>

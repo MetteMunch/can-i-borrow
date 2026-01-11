@@ -54,8 +54,7 @@
 
     <button type="submit">Login</button>
   </form>
-  <br><br>
-
+  <br /><br />
 
   <p>
     Glemt password?

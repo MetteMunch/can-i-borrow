@@ -1,6 +1,6 @@
 /* ===== GLOBAL  ===== */
 :root {
-  font-size: 150%;
+  font-size: 100%;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   line-height: 1.5;
@@ -17,21 +17,21 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font-size: 1rem;
+  font-size: 0.5rem;
 }
 
 h1 {
-  font-size: 2rem; /* 48px */
+  font-size: 1.3rem;
   margin-bottom: 1rem;
 }
 
 h2 {
-  font-size: 1.333rem; /* 32px */
+  font-size: 1.2rem;
   margin-bottom: 0.75rem;
 }
 
 h3 {
-  font-size: 1.1rem; /* ~26px */
+  font-size: 1.1rem;
 }
 
 p,
@@ -97,7 +97,7 @@ a:hover {
   border-radius: 4px;
   border: 1px solid #555;
   color: black;
-  font-size: 0.9rem;
+  font-size: 0.5rem;
 }
 .nav a:hover {
   background: #eee;
@@ -106,7 +106,7 @@ a:hover {
 /* ===== MAIN CONTENT AREA ===== */
 .main-content {
   flex: 1;
-  padding: 40px;
+  padding: 20px;
   display: block; /* <- VIGTIG: gør så dashboard og sider vises korrekt */
   overflow-y: auto;
 }
@@ -114,9 +114,10 @@ a:hover {
 /* ===== FOOTER ===== */
 .footer {
   background-color: #6d8f73;
-  padding: 18px;
+  padding: 10px;
   text-align: left;
   color: black;
+  font-size: 0.8rem;
 }
 
 /* ===== LOGIN & SIGNUP ===== */
@@ -191,5 +192,3 @@ a:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-
-

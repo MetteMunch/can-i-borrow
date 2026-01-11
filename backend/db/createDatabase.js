@@ -91,7 +91,6 @@ if (insertDataMode) {
     userpassword
   );
 
-
   // await db.run(`
   //      INSERT INTO items (item, description, owner_id, image_url)
   //      VALUES ('Pælebor', 'Skal du grave huller til stolper eller lignende og er stærk (den er uden motor), så kan du låne denne', 2, 'https://photos.google.com/photo/AF1QipO5wiUkTT1keMOrqsepT_rys5aTR5JGJd7pe-UC')
