@@ -18,6 +18,7 @@ const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  rolling: true, //så bliver session forlænget ved aktivitet
   cookie: {
     secure: false,
     httpOnly: true,
@@ -51,7 +52,7 @@ io.on('connection', (socket) => {
   const userId = session.user.id;
   console.log('Socket connected for user', userId);
 
-  // vigtigt
+  // her joines
   socket.join(`user-${userId}`);
 
   socket.on('disconnect', () => {
