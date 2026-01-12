@@ -7,7 +7,6 @@
   import toastr from 'toastr';
   import { goBack } from '../../utils/navigation.js';
   import { user } from '../../stores/user.js';
-  import { API_URL } from '../../utils/api.js';
   import './ItemDetail.css';
 
   export let params; // /items/:id
@@ -27,7 +26,7 @@
   // HENTER DATA FRA BACKEND
   // ----------------------------------------------------
   async function loadData() {
-    const itemData = await fetchGet(`${API_URL}/items/${params.id}`);
+    const itemData = await fetchGet(`/items/${params.id}`);
 
     if (!itemData?.data) {
       return;
@@ -35,9 +34,7 @@
 
     item = itemData.data;
 
-    reservations = await fetchGet(`${API_URL}/reservations/item/${params.id}`);
-
-    console.log('reservations', reservations);
+    reservations = await fetchGet(`/reservations/item/${params.id}`);
 
     convertReservationsToEvents();
     options = {
@@ -87,7 +84,7 @@
     }
 
     const res = await fetchRequestJson(
-      `${API_URL}/reservations/request`,
+      "/reservations/request",
       {
         item_id: params.id,
         start_date: startDate,
@@ -119,7 +116,7 @@
     }
 
     const block = await fetchRequestJson(
-      `${API_URL}/reservations/block`,
+      "/reservations/block",
       {
         item_id: params.id,
         start_date: startDate,

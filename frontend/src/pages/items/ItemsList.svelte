@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import { fetchGet } from '../../utils/fetch.js';
   import { navigate } from 'svelte-routing';
-  import { API_URL } from '../../utils/api.js';
 
   import './ItemsList.css';
 
@@ -10,9 +9,8 @@
   let search = '';
 
   async function loadItems() {
-    const res = await fetchGet(`${API_URL}/items`);
+    const res = await fetchGet("/items");
     items = res.data || [];
-    console.log('Jeg er i ItemsList og vil se items', items);
   }
 
   onMount(loadItems);

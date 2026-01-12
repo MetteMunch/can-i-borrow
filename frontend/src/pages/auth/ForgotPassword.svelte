@@ -1,14 +1,13 @@
 <script>
   import { fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
-  import { API_URL } from '../../utils/api.js';
 
   let email = '';
 
   async function sendMail() {
-    const url = `${API_URL}/auth/forgot-password`;
+    const path = "/auth/forgot-password";
 
-    const res = await fetchRequestJson(url, { email }, 'POST');
+    const res = await fetchRequestJson(path, { email }, 'POST');
     const data = await res.json();
 
     if (!res.ok) {

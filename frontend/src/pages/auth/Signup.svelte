@@ -2,7 +2,6 @@
   import { navigate } from 'svelte-routing';
   import { fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
-  import { API_URL } from '../../utils/api.js';
   import { role } from '../../stores/user.js';
 
   let fullname = '';
@@ -13,7 +12,7 @@
   let address = '';
   let phone = '';
 
-  const url = `${API_URL}/auth/signup`;
+  const path = "/auth/signup";
 
   $: if ($role !== 'ADMIN') {
     toastr.error('Kun administratorer kan oprette brugere');
@@ -28,7 +27,7 @@
 
     const body = { fullname, username, email, password, address, phone };
 
-    const res = await fetchRequestJson(url, body, 'POST');
+    const res = await fetchRequestJson(path, body, 'POST');
     const data = await res.json();
 
     if (!res.ok) {

@@ -3,7 +3,6 @@
   import { fetchGet } from '../../utils/fetch.js';
   import { navigate } from 'svelte-routing';
   import { goToMyPage } from '../../utils/navigation.js';
-  import { API_URL } from '../../utils/api.js';
 
   import './Home.css';
 
@@ -12,7 +11,7 @@
 
   // Hent alle items fra backend
   async function loadItems() {
-    const res = await fetchGet(`${API_URL}/items`);
+    const res = await fetchGet("/items");
     items = res.data || [];
   }
 

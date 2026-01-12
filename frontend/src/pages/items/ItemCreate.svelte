@@ -2,15 +2,12 @@
   import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import { goToMyPage } from '../../utils/navigation.js';
-  import { API_URL } from '../../utils/api.js';
   import './ItemCreate.css';
 
   let item = '';
   let description = '';
   let file = null;
   let preview = null;
-
-  console.log('fra env', import.meta.env.VITE_HETZNER_PUBLIC_URL);
 
   // Sætter preview
   function handleFile(e) {
@@ -22,7 +19,7 @@
 
   // Hent presigned URL fra backend og upload billede til Hetzner
   async function getPresignedUrl(filename) {
-    const res = await fetchGet(`${API_URL}/files/upload-url/${filename}`);
+    const res = await fetchGet(`/files/upload-url/${filename}`);
 
     if (!res?.url) {
       toastr.error('Kunne ikke hente upload URL');
@@ -64,7 +61,7 @@
     }
 
     const res = await fetchRequestJson(
-      `${API_URL}/items`,
+      "/items",
       { item, description, image_url },
       'POST'
     );

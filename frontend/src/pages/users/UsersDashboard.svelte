@@ -4,7 +4,6 @@
   import toastr from 'toastr';
   import ConfirmDialog from '../../components/ConfirmDialog.svelte';
   import { user } from '../../stores/user.js';
-  import { API_URL } from '../../utils/api.js';
   import './Dashboard.css';
   import { navigate } from 'svelte-routing';
 
@@ -17,9 +16,9 @@
   let myReceivedRequests = [];
 
   async function loadDashboard() {
-    const req = await fetchGet(`${API_URL}/reservations/my-requests`);
-    const items = await fetchGet(`${API_URL}/items/my-items`);
-    const receivedReq = await fetchGet(`${API_URL}/reservations/received`);
+    const req = await fetchGet("/reservations/my-requests");
+    const items = await fetchGet("/items/my-items");
+    const receivedReq = await fetchGet("/reservations/received");
 
     myRequests = req?.data || [];
     myItems = items?.data || [];
@@ -31,7 +30,7 @@
   onMount(loadDashboard);
 
   async function approveRequest(id) {
-    const res = await fetchRequestJson(`${API_URL}/reservations/${id}/approve`, {}, 'PUT');
+    const res = await fetchRequestJson(`/reservations/${id}/approve`, {}, 'PUT');
 
     if (!res.ok) {
       toastr.error('Kunne ikke godkende anmodning');
@@ -43,7 +42,7 @@
   }
 
   async function declineRequest(id) {
-    const res = await fetchRequestJson(`${API_URL}/reservations/${id}`, {}, 'DELETE');
+    const res = await fetchRequestJson(`/reservations/${id}`, {}, 'DELETE');
 
     if (!res.ok) {
       toastr.error('fejl ifm afvisning af anmodning');
@@ -55,7 +54,7 @@
   }
 
   async function deleteLoan(id) {
-    const res = await fetchRequestJson(`${API_URL}/reservations/${id}`, {}, 'DELETE');
+    const res = await fetchRequestJson(`/reservations/${id}`, {}, 'DELETE');
 
     if (!res.ok) {
       toastr.error('fejl ifm sletning af aftalt udlån');
@@ -99,7 +98,7 @@
   }
 
   async function deleteItem(id) {
-    const res = await fetchRequestJson(`http://localhost:8080/items/${id}`, {}, 'DELETE');
+    const res = await fetchRequestJson(`/items/${id}`, {}, 'DELETE');
 
     const data = await res.json().catch(() => ({}));
 
