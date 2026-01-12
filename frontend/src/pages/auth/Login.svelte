@@ -8,7 +8,7 @@
   let username = '';
   let password = '';
 
-  let path = "/auth/login";
+  let path = '/auth/login';
 
   async function login() {
     const body = { username, password };
@@ -22,7 +22,7 @@
     }
 
     //session check fra backend
-    const sessionData = await fetchGet("/session/me");
+    const sessionData = await fetchGet('/session/me');
 
     if (!sessionData.loggedIn) {
       toastr.error('Kunne ikke logge ind – prøv igen');

@@ -16,9 +16,9 @@
   let myReceivedRequests = [];
 
   async function loadDashboard() {
-    const req = await fetchGet("/reservations/my-requests");
-    const items = await fetchGet("/items/my-items");
-    const receivedReq = await fetchGet("/reservations/received");
+    const req = await fetchGet('/reservations/my-requests');
+    const items = await fetchGet('/items/my-items');
+    const receivedReq = await fetchGet('/reservations/received');
 
     myRequests = req?.data || [];
     myItems = items?.data || [];

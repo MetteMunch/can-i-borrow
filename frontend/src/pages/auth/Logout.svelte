@@ -4,7 +4,7 @@
   import { socket } from '../../utils/socket.js';
   import { fetchRequestJson } from '../../utils/fetch.js';
 
-  let path = "/session/logout";
+  let path = '/session/logout';
 
   async function logout() {
     console.log('Her er jeg i logout');

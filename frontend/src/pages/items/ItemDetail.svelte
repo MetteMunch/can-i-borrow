@@ -9,7 +9,7 @@
   import { user } from '../../stores/user.js';
   import './ItemDetail.css';
 
-  export let params; // /items/:id
+  export let params;
 
   let item = null;
   let reservations = [];
@@ -19,8 +19,7 @@
 
   // reaktiv variabel
   $: isOwner = item && $user && item.owner_id === $user.id;
-  $: console.log('isOwner:', isOwner, 'item.owner_id:', item?.owner_id, 'user.id:', $user?.id);
-  $: console.log('image_url:', item?.image_url);
+
 
   // ----------------------------------------------------
   // HENTER DATA FRA BACKEND
@@ -84,7 +83,7 @@
     }
 
     const res = await fetchRequestJson(
-      "/reservations/request",
+      '/reservations/request',
       {
         item_id: params.id,
         start_date: startDate,
@@ -116,7 +115,7 @@
     }
 
     const block = await fetchRequestJson(
-      "/reservations/block",
+      '/reservations/block',
       {
         item_id: params.id,
         start_date: startDate,

@@ -9,7 +9,7 @@
   let search = '';
 
   async function loadItems() {
-    const res = await fetchGet("/items");
+    const res = await fetchGet('/items');
     items = res.data || [];
   }
 

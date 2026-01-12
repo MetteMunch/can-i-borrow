@@ -12,7 +12,7 @@
   let address = '';
   let phone = '';
 
-  const path = "/auth/signup";
+  const path = '/auth/signup';
 
   $: if ($role !== 'ADMIN') {
     toastr.error('Kun administratorer kan oprette brugere');

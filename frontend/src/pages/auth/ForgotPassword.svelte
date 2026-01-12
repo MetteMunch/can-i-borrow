@@ -5,7 +5,7 @@
   let email = '';
 
   async function sendMail() {
-    const path = "/auth/forgot-password";
+    const path = '/auth/forgot-password';
 
     const res = await fetchRequestJson(path, { email }, 'POST');
     const data = await res.json();

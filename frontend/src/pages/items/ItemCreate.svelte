@@ -60,11 +60,7 @@
       image_url = await uploadImageToHetzner(file);
     }
 
-    const res = await fetchRequestJson(
-      "/items",
-      { item, description, image_url },
-      'POST'
-    );
+    const res = await fetchRequestJson('/items', { item, description, image_url }, 'POST');
 
     if (!res.ok) {
       toastr.error('Kunne ikke oprette item.');
