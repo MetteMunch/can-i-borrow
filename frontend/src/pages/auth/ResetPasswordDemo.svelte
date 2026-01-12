@@ -41,12 +41,7 @@
   <form on:submit|preventDefault={handleSubmit}>
     <div class="form-group">
       <label for="password">Nyt password</label>
-      <input
-        id="password"
-        type="password"
-        bind:value={password}
-        placeholder="Mindst 6 tegn"
-      />
+      <input id="password" type="password" bind:value={password} placeholder="Mindst 6 tegn" />
     </div>
 
     <div class="form-group">

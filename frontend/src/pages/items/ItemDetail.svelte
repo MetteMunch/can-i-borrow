@@ -20,7 +20,6 @@
   // reaktiv variabel
   $: isOwner = item && $user && item.owner_id === $user.id;
 
-
   // ----------------------------------------------------
   // HENTER DATA FRA BACKEND
   // ----------------------------------------------------

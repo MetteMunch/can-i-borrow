@@ -2,3 +2,8 @@ node_modules
 dist
 build
 coverage
+package.json
+package-lock.json
+*.log
+.env
+README.md

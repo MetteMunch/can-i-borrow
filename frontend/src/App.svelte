@@ -31,7 +31,7 @@
 
   onMount(() => {
     //Sessions check - hvis ikke vi har denne tjek så vil brugeren blive smidt ud ved hver refresh
-    fetchGet("/session/me").then((data) => {
+    fetchGet('/session/me').then((data) => {
       if (data.loggedIn) {
         user.set(data.user);
         loggedIn.set(true);
