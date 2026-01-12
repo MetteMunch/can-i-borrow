@@ -3,7 +3,6 @@
   import { fetchGet, fetchRequestJson } from '../../utils/fetch.js';
   import toastr from 'toastr';
   import { goBack } from '../../utils/navigation.js';
-  import { API_URL } from '../../utils/api.js';
   import { user } from '../../stores/user.js';
   import { navigate } from 'svelte-routing';
 
@@ -16,7 +15,7 @@
   let preview = null;
 
   async function loadItem() {
-    const origItem = await fetchGet(`${API_URL}/items/${params.id}`);
+    const origItem = await fetchGet(`/items/${params.id}`);
     if (!origItem?.data) {
       toastr.error('Kunne ikke hente genstand');
       return;
@@ -45,7 +44,7 @@
 
   // Hent presigned URL fra backend og upload billede til Hetzner
   async function getPresignedUrl(filename) {
-    const res = await fetchGet(`${API_URL}/files/upload-url/${filename}`);
+    const res = await fetchGet(`/files/upload-url/${filename}`);
 
     if (!res?.url) {
       throw new Error('Kunne ikke hente upload URL');
@@ -86,7 +85,7 @@
     }
 
     const editedItem = await fetchRequestJson(
-      `${API_URL}/items/${params.id}`,
+      `/items/${params.id}`,
       { item: itemName, description, image_url: finalImageUrl },
       'PUT'
     );

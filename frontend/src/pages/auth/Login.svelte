@@ -4,17 +4,16 @@
   import { navigate } from 'svelte-routing';
   import toastr from 'toastr';
   import { socket } from '../../utils/socket.js';
-  import { API_URL } from '../../utils/api.js';
 
   let username = '';
   let password = '';
 
-  let url = `${API_URL}/auth/login`;
+  let path = "/auth/login";
 
   async function login() {
     const body = { username, password };
 
-    const res = await fetchRequestJson(url, body, 'POST');
+    const res = await fetchRequestJson(path, body, 'POST');
     const data = await res.json();
 
     if (!res.ok) {
@@ -23,7 +22,7 @@
     }
 
     //session check fra backend
-    const sessionData = await fetchGet(`${API_URL}/session/me`);
+    const sessionData = await fetchGet("/session/me");
 
     if (!sessionData.loggedIn) {
       toastr.error('Kunne ikke logge ind – prøv igen');

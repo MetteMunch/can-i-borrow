@@ -1,7 +1,9 @@
+import { API_URL } from './api.js';
+
 //Denne bruges til GET requests
-export async function fetchGet(url) {
+export async function fetchGet(path) {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${API_URL}${path}`, {
       credentials: 'include',
     });
     return await response.json();
@@ -11,7 +13,7 @@ export async function fetchGet(url) {
 }
 
 //Denne bruges til POST, PUT, DELETE requests
-export async function fetchRequestJson(url, bodyObjekt, httpVerbum) {
+export async function fetchRequestJson(path, bodyObjekt, httpVerbum) {
   const objectAsJsonString = JSON.stringify(bodyObjekt); //stringify konverterer vores objekt til en JSON-streng
   const fetchOptions = {
     //Her definerer vi et objekt "fetchOptions" som beskriver hvordan vi vil sende data
@@ -23,13 +25,12 @@ export async function fetchRequestJson(url, bodyObjekt, httpVerbum) {
     body: objectAsJsonString, //Det er vores objekt konverteret til en JSON-streng som vi sender som data (i body) eller empty body med {}
   };
 
-  const response = await fetch(url, fetchOptions); //HTTP-request sendes med fetch til den angivne url.
+  const response = await fetch(`${API_URL}${path}`, fetchOptions); //HTTP-request sendes med fetch til den angivne url.
   //fetch returnerer et promise til et starte med, men await gør at vi venter på korrekt svar (response)
 
   if (!response.ok) {
     const errorMessage = response.statusText;
     console.error('Dette er fejl i postObjectAsData', errorMessage); //Hvis serveren returnerer med en fejl, henter vi denne fejlbesked og udskriver den i konsollen
-    console.log('Dette er fejl i postObjectAsData', errorMessage); //Hvis serveren returnerer med en fejl, henter vi denne fejlbesked og udskriver den i konsollen
   }
   return response;
 }
