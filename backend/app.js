@@ -43,14 +43,22 @@ io.engine.use(sessionMiddleware);
 
 io.on('connection', (socket) => {
   const session = socket.request.session;
+  const connectedAt = new Date().toISOString();
 
-  if (!session?.user) {
+    if (!session?.user) {
     console.log('Socket connected without user');
     return;
   }
 
   const userId = session.user.id;
   console.log('Socket connected for user', userId);
+
+  socket.emit('socket-connected', {
+    userId,
+    connectedAt,
+  });
+
+  console.log("Variablen connectedAt: ", connectedAt);
 
   // her joines
   socket.join(`user-${userId}`);
@@ -60,20 +68,20 @@ io.on('connection', (socket) => {
   });
 });
 
-import sessionRouter from './routes/sessionRouter.js';
+import sessionRouter from './routers/sessionRouter.js';
 app.use('/session', sessionRouter);
 
-import authRouter from './routes/authRouter.js';
+import authRouter from './routers/authRouter.js';
 app.use('/auth', authRouter);
 
-import itemsRouter from './routes/itemsRouter.js';
+import itemsRouter from './routers/itemsRouter.js';
 app.use('/items', itemsRouter);
 
-import reservationsRouter from './routes/reservationsRouter.js';
+import reservationsRouter from './routers/reservationsRouter.js';
 app.use('/reservations', reservationsRouter);
 app.set('io', io);
 
-import fileRouter from './routes/fileRouter.js';
+import fileRouter from './routers/fileRouter.js';
 app.use('/files', fileRouter);
 
 app.get('/test', (req, res) => {
